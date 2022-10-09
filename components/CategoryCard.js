@@ -8,7 +8,7 @@ import {
   TextInput
 } from 'react-native';
 
-import RestaurantCard from '../components/RestaurantCard';
+import RestaurantCard from './ClassCard';
 import BottomTab from '../components/BottomTab';
 const CategoryCard=() =>{
 

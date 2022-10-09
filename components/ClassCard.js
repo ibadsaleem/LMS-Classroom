@@ -10,7 +10,7 @@ import {
 
 
 
-const RestaurantCard=() =>{
+const ClassCard=() =>{
 
 
   return (
@@ -32,4 +32,4 @@ const RestaurantCard=() =>{
 
 
 
-export default RestaurantCard;
+export default ClassCard;

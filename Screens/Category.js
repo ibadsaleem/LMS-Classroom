@@ -10,7 +10,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather'
-import RestaurantCard from '../components/RestaurantCard';
+import RestaurantCard from '../components/ClassCard';
 import BottomTab from '../components/BottomTab';
 import CategoryCard from '../components/CategoryCard';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

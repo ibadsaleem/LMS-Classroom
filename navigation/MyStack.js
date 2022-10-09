@@ -3,8 +3,7 @@ import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../Screens/LoginScreen';
 import Profile from '../Screens/ProfileScreen';
-import Restaurant from '../Screens/Restaurants';
-import Category from '../Screens/Category';
+import Classes from '../Screens/Restaurants';
 import Signup from '../Screens/Signup';
 const Stack = createStackNavigator();
 
@@ -23,18 +22,13 @@ const MyStack = () => {
           options={{headerShown: false}}
         /> 
         <Stack.Screen
-          name="RESTAURANT"
-          component={Restaurant}
+          name="CLASS"
+          component={Classes}
           options={{headerShown: false}}
         />
         <Stack.Screen
           name="PROFILE"
           component={Profile}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="CATEGORY"
-          component={Category}
           options={{headerShown: false}}
         />
         </Stack.Navigator>

@@ -8,9 +8,9 @@ import {
   TextInput
 } from 'react-native';
 
-import RestaurantCard from '../components/RestaurantCard';
+import ClassCard from '../components/ClassCard';
 import BottomTab from '../components/BottomTab';
-const Restaurant=() =>{
+const Classes=() =>{
 
 
   return (
@@ -19,10 +19,10 @@ const Restaurant=() =>{
         <Text style={{fontSize:32,textAlign:'center',fontWeight:'700',padding:10,color:'black'}}>Home</Text>
         </View>
     <ScrollView  style={{width:'100%',backgroundColor:'#ffffff'}} showsVerticalScrollIndicator={false}>
-        <RestaurantCard/>
-        <RestaurantCard/>
-        <RestaurantCard/>
-        <RestaurantCard/>
+        <ClassCard/>
+        <ClassCard/>
+        <ClassCard/>
+        <ClassCard/>
     </ScrollView >
     <BottomTab />
     </View>
@@ -31,4 +31,4 @@ const Restaurant=() =>{
 
 
 
-export default Restaurant;
+export default Classes;
