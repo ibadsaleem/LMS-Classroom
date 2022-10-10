@@ -7,7 +7,6 @@ import {
   View,
   TextInput
 } from 'react-native';
-
 import ClassCard from '../components/ClassCard';
 import BottomTab from '../components/BottomTab';
 const Classes=() =>{
@@ -15,15 +14,17 @@ const Classes=() =>{
 
   return (
     <View style={{width:'100%',height:'100%'}}>
-        <View style={{width:'100%',height:70,backgroundColor:'#ffffff',marginBottom:2,borderBottomWidth:1,borderBottomColor:'lightgrey',elevation:2}}>
-        <Text style={{fontSize:32,textAlign:'center',fontWeight:'700',padding:10,color:'black'}}>Home</Text>
+        <View style={{width:'100%',height:70,backgroundColor:'#ffffff',marginBottom:2,borderBottomWidth:1,borderBottomColor:'lightgrey',elevation:2,justifyContent:'center'}}>
+        <Text style={{fontSize:25,fontWeight:'700',padding:10,color:'black'}}>Learning Management System</Text>
         </View>
     <ScrollView  style={{width:'100%',backgroundColor:'#ffffff'}} showsVerticalScrollIndicator={false}>
-        <ClassCard/>
-        <ClassCard/>
-        <ClassCard/>
-        <ClassCard/>
+        <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>
+        <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>
+        <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>
+        <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>
+      
     </ScrollView >
+    
     <BottomTab />
     </View>
   );

@@ -26,6 +26,7 @@ const Login=({navigation}) =>{
   let onClickLogin=()=>{
       //API CALL for submitting data
       console.log(email,password);
+      navigation.navigate('CLASS');
       clearFields();
     }
    return (
@@ -47,9 +48,7 @@ const Login=({navigation}) =>{
        </TouchableOpacity>
      
  
-      <TouchableOpacity onPress={()=>{navigation.navigate("SIGNUP")}}>
-        <Text style={{color:'black',alignSelf:'center',padding:10,marginTop:20,fontWeight:'600'}} >First Time? Register Here</Text>
-       </TouchableOpacity> 
+      
      </ScrollView >
    );
  };
