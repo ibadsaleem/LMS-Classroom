@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../Screens/LoginScreen';
 import Profile from '../Screens/ProfileScreen';
 import Classes from '../Screens/Classes';
+import Announcements from '../Screens/Announcement';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -14,8 +15,8 @@ const MyStack = () => {
           name="LOGIN"
           component={Login}
           options={{headerShown: false}}
-        /> 
-         
+        />
+
         <Stack.Screen
           name="CLASS"
           component={Classes}
@@ -26,9 +27,14 @@ const MyStack = () => {
           component={Profile}
           options={{headerShown: false}}
         />
-        </Stack.Navigator>
-        </NavigationContainer>
+        <Stack.Screen
+          name="ANNOUNCEMENTS"
+          component={Announcements}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 export default MyStack;

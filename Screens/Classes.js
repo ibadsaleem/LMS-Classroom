@@ -7,10 +7,13 @@ import {
   View,
   TextInput
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import ClassCard from '../components/ClassCard';
 import BottomTab from '../components/BottomTab';
 const Classes=() =>{
 
+  const navigation = useNavigation();
 
   return (
     <View style={{width:'100%',height:'100%'}}>
