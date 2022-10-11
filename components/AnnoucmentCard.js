@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
+import Entypo from 'react-native-vector-icons/Entypo';
 const AnnouncementCard = () => {
   return (
     <View>
@@ -49,8 +50,8 @@ const AnnouncementCard = () => {
          </View>
         </View>
  
-        <TouchableOpacity style={{width:'95%',marginBottom:20,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey'}}>
-            <Text style={{padding:7}}>Comments</Text>
+        <TouchableOpacity style={{width:'95%',marginBottom:20,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey',justifyContent:'center'}}>
+            <Text style={{padding:8,color:'black'}}><Entypo name='attachment' size={15} color='black'/>{' '}Attachments (2)</Text>
         </TouchableOpacity>
     </View>
   );
