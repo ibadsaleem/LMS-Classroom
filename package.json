@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "push": "git add . && git commit -m 'Updated' && git push origin master"
+    "push": "git add . && git commit -m 'Updated' && git push origin master",
+    "build":"./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
