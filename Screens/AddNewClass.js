@@ -6,7 +6,7 @@ import Header from '../components/Header';
 const AddNewClass = () => {
   return (
     <View style={{backgroundColor: '#ffffff', height: '100%', width: '100%'}}>
-      <Header />
+      <Header title='Add New Class' />
       <View style={{marginTop: 200, height: '60%'}}>
         <TextInput
           keyboardType="default"

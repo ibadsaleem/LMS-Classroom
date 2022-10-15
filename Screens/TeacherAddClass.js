@@ -7,7 +7,7 @@ const TeacherAddClass = ({navigation}) => {
     const [isTeacher, setIsTeacher] = useState(true);
   return (
     <View style={{backgroundColor: '#ffffff', height: '100%', width: '100%'}}>
-      <Header />
+      <Header title='Enter Class'/>
       <View style={{marginTop: 200, height: '60%'}}>
         <TextInput
           keyboardType="default"

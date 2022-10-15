@@ -18,10 +18,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const AddMaterial = props => {
   const navigation = useNavigation();
-
+  const route= useRoute();
+  const name=route.params['name']
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header />
+      <Header title={name} />
       <View
         style={{
           width: '95%',

@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 
-const Header=() =>{
+const Header=(props) =>{
   const navigation = useNavigation();
 
 
@@ -18,7 +18,7 @@ const Header=() =>{
         </TouchableOpacity>
         <View style={{justifyContent:'center',width:'80%',marginLeft:10,height:50}}>
         <Text style={{fontSize:20,fontWeight:'700',padding:10,color:'black'}}>
-          Learning Management System
+         {props.title}
           </Text>
         </View>
         </View>

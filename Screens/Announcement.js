@@ -42,7 +42,7 @@ const Announcements = props => {
       <ScrollView
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
-        <Header />
+        <Header title={'Class: '+name}/>
         <View
           style={{
             width: '100%',
@@ -94,9 +94,9 @@ const Announcements = props => {
         actions={actions}
         onPressItem={name => {
           if (name== 'assignment'){
-            navigation.navigate("ASSIGNMENT")
+            navigation.navigate("ASSIGNMENT",{name:'Add Assignment'})
           }else if(name=='material'){ 
-            navigation.navigate("MATERIAL")
+            navigation.navigate("MATERIAL",{name:'Add Material'})
           }
         }}
       />:null}

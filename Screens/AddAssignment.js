@@ -17,11 +17,14 @@ import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 const AddAssignment = props => {
+    const route= useRoute();
+    const name=route.params['name']
+    
   const navigation = useNavigation();
 
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header />
+      <Header title={name} />
       <View
         style={{
           width: '95%',
@@ -44,7 +47,7 @@ const AddAssignment = props => {
           <TextInput
             placeholder="Assignment Details"
             multiline={true}>
-                
+
             </TextInput>
         </View>
         

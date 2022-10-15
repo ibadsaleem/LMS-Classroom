@@ -18,7 +18,7 @@ const Classes=() =>{
 
   return (
     <View style={{width:'100%',height:'100%'}}>
-        <Header/>
+        <Header title="Enrolled Classes"/>
     <ScrollView  style={{width:'100%',backgroundColor:'#ffffff'}} showsVerticalScrollIndicator={false}>
         <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>
         <ClassCard name="Information Security" teacher="Dr.Nadeem Kafi" cover={require("../media/IS.jpg")}/>

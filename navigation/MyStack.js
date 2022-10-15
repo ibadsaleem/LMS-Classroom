@@ -5,7 +5,7 @@ import Login from '../Screens/LoginScreen';
 import Profile from '../Screens/ProfileScreen';
 import Classes from '../Screens/Classes';
 import Announcements from '../Screens/Announcement';
-import AddClass from '../Screens/AddClass';
+// import AddClass from '../Screens/AddClass(notused)';
 import TeacherAddClass from '../Screens/TeacherAddClass';
 import AddNewClass from '../Screens/AddNewClass';
 import AddAssignment from '../Screens/AddAssignment';
@@ -38,11 +38,7 @@ const MyStack = () => {
           component={Announcements}
           options={{headerShown: false}}
         />
-        <Stack.Screen
-          name="ADDCLASS"
-          component={AddClass}
-          options={{headerShown: false}}
-        />
+      
         <Stack.Screen
           name="TEACHERADDCLASS"
           component={TeacherAddClass}
