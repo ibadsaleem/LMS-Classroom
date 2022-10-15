@@ -8,6 +8,9 @@ import Announcements from '../Screens/Announcement';
 import AddClass from '../Screens/AddClass';
 import TeacherAddClass from '../Screens/TeacherAddClass';
 import AddNewClass from '../Screens/AddNewClass';
+import AddAssignment from '../Screens/AddAssignment';
+import AddMaterial from '../Screens/AddMaterial';
+import ChangePassword from '../Screens/ChangePassword';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -48,6 +51,21 @@ const MyStack = () => {
         <Stack.Screen
           name="ADDNEWCLASS"
           component={AddNewClass}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ASSIGNMENT"
+          component={AddAssignment}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="MATERIAL"
+          component={AddMaterial}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CHANGEPASSWORD"
+          component={ChangePassword}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

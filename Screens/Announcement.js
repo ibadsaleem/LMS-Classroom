@@ -13,19 +13,23 @@ import AnnouncementCard from '../components/AnnoucmentCard';
 import {useRoute} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FloatingAction} from 'react-native-floating-action';
+import { useNavigation } from '@react-navigation/native';
 
 const Announcements = props => {
+  const navigation = useNavigation();
+
   const actions = [
     {
       text: 'Add Assignment',
       icon: require('../media/assignment.png'),
-      name: 'bt_accessibility',
+      name: 'assignment',
       position: 2,
+      
     },
     {
       text: 'Add Material',
       icon: require('../media/table.png'),
-      name: 'bt_language',
+      name: 'material',
       position: 1,
     },
   ];
@@ -89,7 +93,11 @@ const Announcements = props => {
       {isTeacher?<FloatingAction
         actions={actions}
         onPressItem={name => {
-          console.log(`selected button: ${name}`);
+          if (name== 'assignment'){
+            navigation.navigate("ASSIGNMENT")
+          }else if(name=='material'){ 
+            navigation.navigate("MATERIAL")
+          }
         }}
       />:null}
     </View>
