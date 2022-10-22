@@ -11,6 +11,7 @@ import AddNewClass from '../Screens/AddNewClass';
 import AddAssignment from '../Screens/AddAssignment';
 import AddMaterial from '../Screens/AddMaterial';
 import ChangePassword from '../Screens/ChangePassword';
+import ForgotPassword from '../Screens/ForgotPassword';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -62,6 +63,11 @@ const MyStack = () => {
         <Stack.Screen
           name="CHANGEPASSWORD"
           component={ChangePassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FORGOTPASSWORD"
+          component={ForgotPassword}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

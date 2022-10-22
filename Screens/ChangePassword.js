@@ -6,7 +6,7 @@ import Header from '../components/Header';
 const ChangePassword = ({navigation}) => {
   return (
     <View style={{backgroundColor: '#ffffff', height: '100%', width: '100%'}}>
-      <Header />
+      <Header title='Change Password' hidden={false} />
       <View style={{marginTop: 200, height: '60%'}}>
         <TextInput
           keyboardType="default"

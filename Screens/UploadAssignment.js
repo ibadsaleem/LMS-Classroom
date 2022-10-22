@@ -16,7 +16,7 @@ const UploadAssignment = props => {
   const navigation = useNavigation();
   return (
 <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header title="Upload Assignment"/>
+      <Header title="Upload Assignment" hidden={false}/>
       <View
         style={{
           width: '95%',

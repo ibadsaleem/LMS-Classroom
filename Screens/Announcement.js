@@ -42,7 +42,7 @@ const Announcements = props => {
       <ScrollView
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
-        <Header title={'Class: '+name}/>
+        <Header title={'Class: '+name} hidden={false}/>
         <View
           style={{
             width: '100%',

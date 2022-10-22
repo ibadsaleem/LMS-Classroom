@@ -22,7 +22,7 @@ const AddMaterial = props => {
   const name=route.params['name']
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header title={name} />
+      <Header title={name} hidden={false} />
       <View
         style={{
           width: '95%',

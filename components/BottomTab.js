@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 
-export default function BottomTab() {
+export default function BottomTab(props) {
   const [homeColor, setHomeColor] = useState('#000000');
   const [addColor, setaddColor] = useState('#000000');
   const [userColor, setuserColor] = useState('#000000');
