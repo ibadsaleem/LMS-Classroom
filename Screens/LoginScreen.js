@@ -24,6 +24,7 @@ const Login=({navigation}) =>{
     setpassword('');
   }
   let onClickLogin=()=>{
+      
       //API CALL for submitting data
       console.log(email,password);
       navigation.navigate('CLASS');

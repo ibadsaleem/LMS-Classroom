@@ -88,7 +88,7 @@ export default function BottomTab() {
             fontSize: 10,
             fontWeight: '700',
           }}>
-          User
+          Profile
         </Text>
       </TouchableOpacity>
     </View>
