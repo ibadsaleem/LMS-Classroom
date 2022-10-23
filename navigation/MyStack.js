@@ -12,6 +12,8 @@ import AddAssignment from '../Screens/AddAssignment';
 import AddMaterial from '../Screens/AddMaterial';
 import ChangePassword from '../Screens/ChangePassword';
 import ForgotPassword from '../Screens/ForgotPassword';
+import TeacherLogin from '../Screens/TeacherLogin';
+import TeacherProfile from '../Screens/TeacherProfile';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -21,6 +23,11 @@ const MyStack = () => {
         <Stack.Screen
           name="LOGIN"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TEACHERLOGIN"
+          component={TeacherLogin}
           options={{headerShown: false}}
         />
 
@@ -68,6 +75,11 @@ const MyStack = () => {
         <Stack.Screen
           name="FORGOTPASSWORD"
           component={ForgotPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TEACHERPROFILE"
+          component={TeacherProfile}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

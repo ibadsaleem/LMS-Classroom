@@ -2,13 +2,22 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function BottomTab(props) {
   const [homeColor, setHomeColor] = useState('#000000');
+  const [loginMember, setLoginMember] = useState(null);
   const [addColor, setaddColor] = useState('#000000');
   const [userColor, setuserColor] = useState('#000000');
   const navigation = useNavigation();
+  useEffect(() => {
+    func();
+  });
+  const func = async () => {
+    const loginMember= await AsyncStorage.getItem('loginMember');
+    setLoginMember(loginMember);
+  }
 
   return (
     <View
@@ -71,7 +80,9 @@ export default function BottomTab(props) {
       <TouchableOpacity
       onPress={() => {
         
-          navigation.navigate('PROFILE');
+          {
+            loginMember=='teacher'? navigation.navigate('TEACHERPROFILE'):navigation.navigate('PROFILE');
+          }
 
       }}
       style={{justifyContent: 'center', width: 40}}>

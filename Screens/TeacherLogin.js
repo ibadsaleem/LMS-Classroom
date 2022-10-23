@@ -12,24 +12,24 @@ import {
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = ({navigation}) => {
-  const [email, setemail] = useState(null);
+const TeacherLogin = ({navigation}) => {
+  const [username, setusername] = useState(null);
   const [password, setpassword] = useState(null);
   const [loading, setLoading] = useState(false);
   let clearFields = () => {
-    setemail('');
+    setusername('');
     setpassword('');
   };
   let onClickLogin = () => {
     setLoading(true);
     //API CALL for submitting data
-    fetch('https://ipt-lms-1.herokuapp.com/api/user/Users/Login', {
+    fetch('https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/Login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: email,
+        username: username,
         password: password,
       }),
     })
@@ -41,8 +41,7 @@ const Login = ({navigation}) => {
           const dataUser = JSON.stringify(data);
           await AsyncStorage.setItem('userinfo', dataUser);
           await AsyncStorage.setItem('loginStatus', 'true');
-          await AsyncStorage.setItem('loginMember', 'student');
-
+          await AsyncStorage.setItem('loginMember', 'teacher');
           clearFields();
           navigation.navigate('CLASS');
         } else if (data.m === 'Incorrect Username Or Password') {
@@ -94,9 +93,9 @@ const Login = ({navigation}) => {
       </Text>
       <View>
         <TextInput
-          onChangeText={text => setemail(text)}
-          keyboardType="email-address"
-          value={email}
+          onChangeText={text => setusername(text)}
+          keyboardType="username-address"
+          value={username}
           style={{
             elevation: 2,
             width: '80%',
@@ -107,7 +106,7 @@ const Login = ({navigation}) => {
             backgroundColor: '#EFEFEF',
             borderRadius: 5,
           }}
-          placeholder="Roll No eg: k190123"></TextInput>
+          placeholder="Teacher User Name eg: johndavid"></TextInput>
         <TextInput
           onChangeText={text => setpassword(text)}
           value={password}
@@ -134,7 +133,7 @@ const Login = ({navigation}) => {
             Forgot Password?
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('TEACHERLOGIN')}>
+        <TouchableOpacity onPress={() => navigation.navigate('LOGIN')}>
           <Text
             style={{
               color: 'black',
@@ -142,7 +141,7 @@ const Login = ({navigation}) => {
               padding: 10,
               fontWeight: '600',
             }}>
-            Are you Faculty Member? Click Here
+            Are you Student? Click Here
           </Text>
         </TouchableOpacity>
       </View>
@@ -179,4 +178,4 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default TeacherLogin;
