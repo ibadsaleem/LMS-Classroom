@@ -35,7 +35,6 @@ const Login = ({navigation}) => {
     })
       .then(response => response.json())
       .then(async data => {
-        console.log(data);
         if (data['token']) {
           setLoading(false);
           const dataUser = JSON.stringify(data);

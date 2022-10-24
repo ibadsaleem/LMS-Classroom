@@ -14,12 +14,18 @@ import ChangePassword from '../Screens/ChangePassword';
 import ForgotPassword from '../Screens/ForgotPassword';
 import TeacherLogin from '../Screens/TeacherLogin';
 import TeacherProfile from '../Screens/TeacherProfile';
+import SplashScreen from '../Screens/SplashScreen';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="SPLASHSCREEN"
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="LOGIN"
           component={Login}

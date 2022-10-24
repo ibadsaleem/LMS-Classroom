@@ -20,6 +20,10 @@ const TeacherProfile = () => {
   useEffect(() => {
    func();
   })
+  const logout= async ()=>{
+    navigation.navigate("LOGIN");
+    await AsyncStorage.setItem('loginStatus', 'false');
+  }
   const func = async ()=>{
    jsonValue = await AsyncStorage.getItem('userinfo');
    setID(JSON.parse(jsonValue).id);
@@ -98,7 +102,7 @@ const TeacherProfile = () => {
 
     
       </View>
-          <TouchableOpacity onPress={()=>navigation.navigate("LOGIN")} style={{borderRadius:40,width:'95%',height:50,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
+          <TouchableOpacity onPress={logout} style={{borderRadius:40,width:'95%',height:50,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
               <Text style={{fontSize:20,color:'black',fontWeight:'600'}}><MaterialCommunityIcons name='logout' style={{fontWeight:'600'}} size={25}/>{' '}Logout</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>navigation.navigate("CHANGEPASSWORD")} style={{borderRadius:40,width:'95%',height:50,marginTop:20,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
