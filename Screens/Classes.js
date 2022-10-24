@@ -39,8 +39,10 @@ const Classes = () => {
   }, []);
   const navigation = useNavigation();
   const classesEnrolled = async () => {
+    let loginMember = await AsyncStorage.getItem('loginMember');
+    let api = loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users/classes':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes'
     let jsonValue = await AsyncStorage.getItem('userinfo');
-    fetch('https://ipt-lms-1.herokuapp.com/api/user/Users/classes', {
+    fetch(api, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -48,10 +50,16 @@ const Classes = () => {
       },
     })
       .then(response => response.json())
-      .then(json => {
-        setCourses(json);
-        // console.log(json[0].course.courseName);
-      });
+      .then(async json => {
+        if (json.message === 'Unauthroized') {
+          navigation.navigate('LOGIN');
+          AsyncStorage.setItem('loginStatus', 'false');
+        }else{
+
+          setCourses(json);
+        }
+      })
+      
   };
   return (
     <View style={{width: '100%', height: '100%'}}>

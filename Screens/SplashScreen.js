@@ -16,6 +16,7 @@ const SplashScreen = ({navigation}) => {
   //Used this GetLearnFundamentalApi just for checking the unauthorization purpose only
 
   const GetUser = async () => {
+    
     const jsonValue = await AsyncStorage.getItem('userinfo');
     let i = await fetch(
       'https://ipt-lms-1.herokuapp.com/api/user/Users',
@@ -28,7 +29,8 @@ const SplashScreen = ({navigation}) => {
       },
     )
       .then(response => response.json())
-      .then( json => {
+      .then( async json => {
+       
         if (json.message === 'Unauthroized') {
           Alert.alert('Session Expired', 'Please Login Again');
           setc(1);
