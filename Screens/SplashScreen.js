@@ -12,7 +12,7 @@ const SplashScreen = ({navigation}) => {
     return () => clearTimeout();
   });
   const [c, setc] = useState(0);
-
+  let msg='';
   //Used this GetLearnFundamentalApi just for checking the unauthorization purpose only
 
   const GetUser = async () => {
@@ -30,7 +30,7 @@ const SplashScreen = ({navigation}) => {
     )
       .then(response => response.json())
       .then( async json => {
-       
+        msg=json.message;
         if (json.message === 'Unauthroized') {
           Alert.alert('Session Expired', 'Please Login Again');
           setc(1);
@@ -47,7 +47,7 @@ const SplashScreen = ({navigation}) => {
     if (LoginStatus == 'true') {
      await  GetUser();
       await sleep(2000);
-      if (c == 0) {
+      if (c == 0 && msg!== 'Unauthroized') {
         navigation.navigate('CLASS');
       } else {
         if (LoginMember=='student')
