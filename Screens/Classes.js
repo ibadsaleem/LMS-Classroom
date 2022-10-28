@@ -55,7 +55,6 @@ const Classes = () => {
           navigation.navigate('LOGIN');
           AsyncStorage.setItem('loginStatus', 'false');
         }else{
-
           setCourses(json);
         }
       })
@@ -71,7 +70,8 @@ const Classes = () => {
           return (
             <ClassCard
               key={index}
-              name={item.course.courseName + ' ' + item.section}
+              name={item.course.courseName}
+              section={item.section}
               teacher={item.instructor.name}
               cover={require('../media/IS.jpg')}
               id={item.id}

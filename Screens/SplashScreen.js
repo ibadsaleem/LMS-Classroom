@@ -38,7 +38,7 @@ const SplashScreen = ({navigation}) => {
           setc(0);
         }
       })
-      .catch(error => {});
+      .catch(error => {console.log("CHAL JA PLZ")});
   };
 
   const CheckLogin = async () => {
@@ -57,11 +57,7 @@ const SplashScreen = ({navigation}) => {
         }
       }
     } else {
-        if (LoginMember=='student')
-        {navigation.navigate('LOGIN');}
-        else if(LoginMember=='teacher'){
-            {navigation.navigate('TEACHERLOGIN');}
-        }
+        navigation.navigate('LOGIN');
     }
   };
   function sleep(ms) {

@@ -10,7 +10,7 @@ import {
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
-const AnnouncementCard = () => {
+const AnnouncementCard = (props) => {
   return (
     <View>
 
@@ -35,17 +35,13 @@ const AnnouncementCard = () => {
               />
             </View>
             <View>
-                <Text style={{fontSize: 15, fontWeight: '500', color: 'black'}}>Dr Nadeem Kafi</Text>
+                <Text style={{fontSize: 15, fontWeight: '500', color: 'black'}}>{props.teacher}</Text>
                 <Text style={{fontSize: 10, fontWeight: '700', color: 'grey'}}>Oct 6</Text>
             </View>
           </View>
          <View>
           <Text style={{fontSize:15,marginTop:10,color:'black',textAlign:'justify',fontWeight:'400'}}>
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam 
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam 
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam 
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam 
-            lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam 
+            {props.description}
           </Text>
          </View>
         </View>
