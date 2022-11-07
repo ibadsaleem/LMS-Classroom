@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   View,
+  BackHandler,
   TextInput,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,6 +19,16 @@ const Profile = () => {
   const navigation = useNavigation();
   let jsonValue={};
   useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
    func();
   })
   const logout= async ()=>{

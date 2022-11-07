@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  BackHandler,
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
@@ -35,6 +36,16 @@ const Announcements = props => {
   let loginMember = '';
   useEffect(() => {
     // func();
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
   }, []);
 
   // const func = async () => {

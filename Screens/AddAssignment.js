@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  BackHandler,
   ActivityIndicator,
   Alert,
 } from 'react-native';
@@ -29,7 +30,18 @@ const AddAssignment = props => {
   const [attachmentCount, setattachmentCount] = useState(0);
   const [details, setDetails] = useState('');
   const navigation = useNavigation();
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
 
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  })
   const [media, setMedia] = useState([]);
   const docPicker = async () => {
     setattachmentCount(0);

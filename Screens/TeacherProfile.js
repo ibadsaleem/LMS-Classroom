@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   View,
+  BackHandler,
   TextInput,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -18,7 +19,17 @@ const TeacherProfile = () => {
   const navigation = useNavigation();
   let jsonValue={};
   useEffect(() => {
-   func();
+    func();
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
   })
   const logout= async ()=>{
     navigation.navigate("LOGIN");

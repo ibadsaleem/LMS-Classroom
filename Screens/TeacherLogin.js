@@ -7,6 +7,7 @@ import {
   View,
   Alert,
   TextInput,
+  BackHandler,
   ActivityIndicator,
 } from 'react-native';
 

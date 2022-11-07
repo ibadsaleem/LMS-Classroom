@@ -1,9 +1,23 @@
-import React,{useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import React,{useEffect, useState} from 'react';
+import {Text, TouchableOpacity, View,BackHandler} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
+import {useNavigation} from '@react-navigation/native';
 const AddNewClass = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  })
   return (
     <View style={{backgroundColor: '#ffffff', height: '100%', width: '100%'}}>
       <Header title='Add New Class' hidden={false} />

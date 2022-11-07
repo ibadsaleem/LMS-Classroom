@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   View,
+   BackHandler,
   TextInput,
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
@@ -14,6 +15,18 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const UploadAssignment = props => {
   const navigation = useNavigation();
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  })
   return (
 <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
       <Header title="Upload Assignment" hidden={false}/>

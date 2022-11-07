@@ -8,6 +8,7 @@ import {
   TextInput,
   ActivityIndicator,
   Alert,
+  BackHandler
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
 import AnnouncementCard from '../components/AnnoucmentCard';
@@ -21,6 +22,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 
 const AddMaterial = props => {
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
+  })
+
   const [Loading, setLoading] = useState(false);
   // const doc = new FormData();
   const route = useRoute();
