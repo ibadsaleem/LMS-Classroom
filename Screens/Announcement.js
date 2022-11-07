@@ -16,11 +16,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {FloatingAction} from 'react-native-floating-action';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DocumentPicker from 'react-native-document-picker';
 import {titleCase} from 'title-case';
+//Add AAAAAAAAA
+// Add button for file upload and change the function as per count
+
 const Announcements = props => {
+  
   const route = useRoute();
   const name = route.params['name'];
   const teacherName = route.params['teacherName'];
+  const navigation = useNavigation();
   const id = route.params['id'];
   const [annoucements, setannoucements] = useState([]);
   const [annoucementtext, setannoucementtext] = useState('');
@@ -28,31 +34,74 @@ const Announcements = props => {
   const [loading, setloading] = useState(true);
   let loginMember = '';
   useEffect(() => {
-    func();
+    // func();
   }, []);
 
-  const func = async () => {
-    let jsonValue = await AsyncStorage.getItem('userinfo');
-    loginMember = await AsyncStorage.getItem('loginMember');
+  // const func = async () => {
+  //   let jsonValue = await AsyncStorage.getItem('userinfo');
+  //   loginMember = await AsyncStorage.getItem('loginMember');
+  //   loginMember=='student'?fetch(
+  //     `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+  //       },
+  //     },
+  //   )
+  //     .then(response => response.json())
+  //     .then(async json => {
+  //       if(json.message ==='Unauthroized'){
+  //         alert('You are not authorized to view this page')
+  //         AsyncStorage.setItem('loginStatus','false');
+  //         navigation.navigate('TEACHERLOGIN');
+  //       }else{
+  //         setannoucements(json);
+  //         console.log(json)
+  //         console.log(annoucements);
+  //         setloading(false);
+  //       }
+  //     }):null;
+  // };
+
+  const documentUpload = async () => {
+    const doc = new FormData();
+    const res = await DocumentPicker.pickMultiple({
+      type: [DocumentPicker.types.allFiles],
+
+    });
+    res.forEach(element => {
+      doc.append('fileToUpload', element);
+    });
+    doc.append('title', 'Hello');
+    doc.append('announcementType', 'ANNOUNCEMENT');
+    doc.append('description', 'Hello This is assignment');
+    doc.append('dueDate', '2022-05-10');
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
+      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/upload/class/${id}`,
       {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+          'Content-Type': 'multipart/form-data',
         },
+        body: doc,
       },
     )
       .then(response => response.json())
-      .then(async json => {
-        setannoucements(json);
-        setloading(false);
+      .then(data => {
+        console.log(data);
+      })
+      .catch ((err) =>{
+        if (DocumentPicker.isCancel(err)) {
+        } else {
+          throw err;
+        }
       });
   };
-  const func_postannouncement = async (a) => {
+  const func_postannouncement = async a => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
-    // loginMember = await AsyncStorage.getItem('loginMember');
+    loginMember = await AsyncStorage.getItem('loginMember');
     fetch(
       `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/announcement/add/${id}`,
       {
@@ -76,7 +125,6 @@ const Announcements = props => {
       });
   };
 
-  const navigation = useNavigation();
 
   const actions = [
     {
@@ -137,12 +185,14 @@ const Announcements = props => {
                 onChangeText={text => setannoucementtext(text)}
                 placeholder="Share with your class"
                 multiline={true}
-                  value={annoucementtext}
-                >
-                </TextInput>
+                value={annoucementtext}></TextInput>
             </View>
-            <TouchableOpacity style={{justifyContent: 'center', alignContent: 'flex-end'}}>
-              <TouchableOpacity onPress={()=>func_postannouncement('ANNOUNCEMENT')}>
+            <TouchableOpacity
+              style={{justifyContent: 'center', alignContent: 'flex-end'}}>
+              <TouchableOpacity
+                onPress={
+                  () => func_postannouncement('ANNOUNCEMENT')
+                }>
                 <MaterialCommunityIcons
                   name="send-circle"
                   size={30}
@@ -152,7 +202,7 @@ const Announcements = props => {
             </TouchableOpacity>
           </View>
         )}
-        {loading ? (
+        {/* {loading || annoucements==[] ? (
           <View>
             <ActivityIndicator
               size="large"
@@ -173,7 +223,7 @@ const Announcements = props => {
               />
             );
           })
-        )}
+        )} */}
       </ScrollView>
       {loginMember == 'student' ? (
         <BottomTab />
@@ -182,9 +232,9 @@ const Announcements = props => {
           actions={actions}
           onPressItem={name => {
             if (name == 'assignment') {
-              navigation.navigate('ASSIGNMENT', {name: 'Add Assignment'});
+              navigation.navigate('ASSIGNMENT', {name: 'Add Assignment',id:id});
             } else if (name == 'material') {
-              navigation.navigate('MATERIAL', {name: 'Add Material'});
+              navigation.navigate('MATERIAL', {name: 'Add Material',id:id});
             }
           }}
         />

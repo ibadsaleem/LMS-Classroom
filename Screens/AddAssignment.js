@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   Text,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
 import AnnouncementCard from '../components/AnnoucmentCard';
@@ -15,16 +17,72 @@ import {FloatingAction} from 'react-native-floating-action';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DocumentPicker from 'react-native-document-picker';
 
 const AddAssignment = props => {
-    const route= useRoute();
-    const name=route.params['name']
-    
+  const [Loading, setLoading] = useState(false);
+  // const doc = new FormData();
+  const route = useRoute();
+  const name = route.params['name'];
+  const id = route.params['id'];
+  const [attachmentCount, setattachmentCount] = useState(0);
+  const [details, setDetails] = useState('');
   const navigation = useNavigation();
 
+  const [media, setMedia] = useState([]);
+  const docPicker = async () => {
+    setattachmentCount(0);
+    const res = await DocumentPicker.pickMultiple({
+      type: [DocumentPicker.types.allFiles],
+    });
+    setMedia(res);
+    setattachmentCount(res.length);
+  };
+
+  const documentUpload = async () => {
+    if (details === '') {
+      alert('Kindly Provide Assignment Details');
+    } else {
+      setLoading(true);
+      const doc = new FormData();
+      media.forEach(element => {
+        doc.append('fileToUpload', element);
+      });
+      doc.append('title', 'ASSIGNMENT');
+      doc.append('announcementType', 'ASSIGNMENT');
+      doc.append('description', details);
+      doc.append('dueDate', '2022-05-10');
+      let jsonValue = await AsyncStorage.getItem('userinfo');
+      fetch(
+        `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/upload/class/${id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            // Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+          },
+          body: doc,
+        },
+      )
+        .then(response => response.json())
+        .then(data => {
+          setMedia([]);
+          setattachmentCount(0);
+          setDetails('');
+          setLoading(false);
+          alert('Assignment Uploaded');
+          console.log(data);
+        })
+        .catch(error => {
+          console.log('======>');
+          console.error(error);
+        });
+    }
+  };
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header title={name} hidden={false}/>
+      <Header title={name} hidden={false} />
       <View
         style={{
           width: '95%',
@@ -45,14 +103,16 @@ const AddAssignment = props => {
         </View>
         <View style={{width: '75%'}}>
           <TextInput
+            onChangeText={text => {
+              setDetails(text);
+            }}
             placeholder="Assignment Details"
-            multiline={true}>
-
-            </TextInput>
+            multiline={true}
+            value={details}></TextInput>
         </View>
-        
       </View>
       <TouchableOpacity
+        onPress={() => docPicker()}
         style={{
           justifyContent: 'center',
           width: '95%',
@@ -65,11 +125,34 @@ const AddAssignment = props => {
           borderBottomLeftRadius: 10,
         }}>
         <Text style={{padding: 8, color: 'black', fontSize: 13}}>
-          <Entypo name="attachment" size={13} color="black" /> Attachments (2)
+          <Entypo name="attachment" size={13} color="black" /> Attachments (
+          {attachmentCount})
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{width:200,height:50,justifyContent:'center',backgroundColor:'#0099cc',alignSelf:'center',marginTop:20}}>
-            <Text style={{textAlign:'center',color:'white',fontSize:15,fontWeight:'700'}}>Upload Assignment</Text>
+      <TouchableOpacity
+        onPress={documentUpload}
+        style={{
+          borderRadius: 10,
+          width: 200,
+          height: 50,
+          justifyContent: 'center',
+          backgroundColor: '#0099cc',
+          alignSelf: 'center',
+          marginTop: 20,
+        }}>
+        {Loading ? (
+          <ActivityIndicator size="small" color="white" />
+        ) : (
+          <Text
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              fontSize: 15,
+              fontWeight: '700',
+            }}>
+            Upload Assignment
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );
