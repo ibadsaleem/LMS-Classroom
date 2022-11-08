@@ -22,13 +22,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment/moment';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const AnnouncementView = props => {
   const navigation = useNavigation();
   const route = useRoute();
   const content = route.params['obj'];
   const date = route.params['date'];
-  console.log(content.obj);
+//   console.log(content.obj);
+const downloadFile=async(link,name)=>{
+    console.log(link);
+    const { config, fs } = RNFetchBlob
+    let PictureDir = fs.dirs.PictureDir // this is the pictures directory. You can check the available directories in the wiki.
+    let options = {
+      fileCache: true,
+      addAndroidDownloads : {
+        useDownloadManager : true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
+        notification : false,
+        // path:  PictureDir + "/me_"+Math.floor(date.getTime() + date.getSeconds() / 2), // this is the path where your downloaded file will live in
+        description : 'Downloading document.'
+      }
+    }
+    config(options).fetch('GET', link).then((res) => {
+        console.log(res)
+      // do some magic here
+    })
+}
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
       <Header title={content.title} />
@@ -95,7 +114,7 @@ const AnnouncementView = props => {
                 </Text>:
             content.obj.map((item, index) => {
               return (
-                <TouchableOpacity>
+                <TouchableOpacity key={index+1} onPress={()=>{downloadFile(item.filePath,item.fileName)}}>
 
                 <Text style={{padding: 8, color: 'black'}}>
                   <Entypo name="attachment" size={15} color="black" />

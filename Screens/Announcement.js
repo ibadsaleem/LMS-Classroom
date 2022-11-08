@@ -89,14 +89,14 @@ const Announcements = props => {
       )
         .then(response => response.json())
         .then(async json => {
-          console.log(json)
+          // console.log(json)
           if(json.message ==='Unauthroized'){
             alert('You are not authorized to view this page')
             AsyncStorage.setItem('loginStatus','false');
             navigation.navigate('TEACHERLOGIN');
           }else{
             setannoucements(json);
-            console.log(json)
+            // console.log(json)
             setloading(false);
           }
         });
@@ -127,7 +127,7 @@ const Announcements = props => {
     )
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
       })
       .catch ((err) =>{
         if (DocumentPicker.isCancel(err)) {
