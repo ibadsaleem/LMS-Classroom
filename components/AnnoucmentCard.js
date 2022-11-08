@@ -10,9 +10,13 @@ import {
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 const AnnouncementCard = (props) => {
+  const navigation = useNavigation();
+  const month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return (
-    <View>
+    <TouchableOpacity onPress={()=>{navigation.navigate('ANNOUNCEMENTVIEW',{obj:props,date:(moment(props.date).date()+' '+month[moment(props.date).month()-1]+' '+moment(props.date).year())})}}>
 
         <View
           style={{
@@ -36,7 +40,7 @@ const AnnouncementCard = (props) => {
             </View>
             <View>
                 <Text style={{fontSize: 15, fontWeight: '500', color: 'black'}}>{props.teacher}</Text>
-                <Text style={{fontSize: 10, fontWeight: '700', color: 'grey'}}>Oct 6</Text>
+                <Text style={{fontSize: 10, fontWeight: '700', color: 'grey'}}>{moment(props.date).date()+' '+month[moment(props.date).month()-1]+' '+moment(props.date).year()}</Text>
             </View>
           </View>
          <View>
@@ -46,10 +50,10 @@ const AnnouncementCard = (props) => {
          </View>
         </View>
  
-        <TouchableOpacity style={{width:'95%',marginBottom:20,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey',justifyContent:'center'}}>
-            <Text style={{padding:8,color:'black'}}><Entypo name='attachment' size={15} color='black'/>{' '}Attachments (2)</Text>
-        </TouchableOpacity>
-    </View>
+        <View style={{width:'95%',marginBottom:20,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey',justifyContent:'center'}}>
+            <Text style={{padding:8,color:'black'}}><Entypo name='attachment' size={15} color='black'/>{' '}Attachments ({props.len})</Text>
+        </View>
+    </TouchableOpacity>
   );
 };
 

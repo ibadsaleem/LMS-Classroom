@@ -20,16 +20,21 @@ import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
+import DatePicker from 'react-native-date-picker'
+import moment from 'moment/moment';
 
 const AddAssignment = props => {
   const [Loading, setLoading] = useState(false);
   // const doc = new FormData();
   const route = useRoute();
+  const [dueDate, setDueDate] = useState('');
   const name = route.params['name'];
   const id = route.params['id'];
   const [attachmentCount, setattachmentCount] = useState(0);
   const [details, setDetails] = useState('');
   const navigation = useNavigation();
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     const backAction = () => {
       navigation.goBack();
@@ -64,7 +69,7 @@ const AddAssignment = props => {
       doc.append('title', 'ASSIGNMENT');
       doc.append('announcementType', 'ASSIGNMENT');
       doc.append('description', details);
-      doc.append('dueDate', '2022-05-10');
+      doc.append('dueDate', dueDate);
       let jsonValue = await AsyncStorage.getItem('userinfo');
       fetch(
         `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/upload/class/${id}`,
@@ -142,6 +147,29 @@ const AddAssignment = props => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+          onPress={() => setOpen(true)}
+        style={{
+          borderRadius: 10,
+          width: 200,
+          height: 50,
+          justifyContent: 'center',
+          backgroundColor: '#0099cc',
+          alignSelf: 'center',
+          marginTop: 20,
+        }}>
+        
+          <Text
+            style={{
+              textAlign: 'center',
+              color: 'white',
+              fontSize: 15,
+              fontWeight: '700',
+            }}>
+            Pick Due Date
+          </Text>
+        
+      </TouchableOpacity>
+      <TouchableOpacity
         onPress={documentUpload}
         style={{
           borderRadius: 10,
@@ -166,6 +194,19 @@ const AddAssignment = props => {
           </Text>
         )}
       </TouchableOpacity>
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date);
+          setDueDate(moment(date).format('YYYY-MM-DD'))
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+      />
     </View>
   );
 };

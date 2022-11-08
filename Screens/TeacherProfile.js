@@ -79,7 +79,7 @@ const TeacherProfile = () => {
           alignContent: 'center',
           justifyContent: 'space-evenly',
         }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: '#EFEFEF',
             width: 120,
@@ -93,9 +93,9 @@ const TeacherProfile = () => {
            06
           </Text>
           <Text style={{color: 'blue',fontWeight: '500'}}>Assignments</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: '#EFEFEF',
             width: 120,
@@ -109,7 +109,7 @@ const TeacherProfile = () => {
             12
           </Text>
           <Text style={{color: 'red',fontWeight: '500'}}>Class Owner</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
     
       </View>

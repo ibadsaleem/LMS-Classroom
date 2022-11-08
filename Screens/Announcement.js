@@ -19,6 +19,7 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 import {titleCase} from 'title-case';
+import moment from 'moment';
 //Add AAAAAAAAA
 // Add button for file upload and change the function as per count
 
@@ -35,7 +36,10 @@ const Announcements = props => {
   const [loading, setloading] = useState(true);
   let loginMember = '';
   useEffect(() => {
-    func();
+    setTimeout(() => {
+      func();
+    }, 1000);
+
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -45,7 +49,7 @@ const Announcements = props => {
       'hardwareBackPress',
       backAction,
     );
-    return () => backHandler.remove();
+    return () => {backHandler.remove();clearTimeout()};
   }, []);
 
   const func = async () => {
@@ -69,8 +73,8 @@ const Announcements = props => {
           navigation.navigate('TEACHERLOGIN');
         }else{
           setannoucements(json);
-          console.log(json)
-          console.log(annoucements);
+          // console.log(json)
+          // console.log(annoucements);
           setloading(false);
         }
       }):fetch(
@@ -253,6 +257,10 @@ const Announcements = props => {
                 key={index}
                 teacher={titleCase(teacherName)}
                 description={titleCase(item.description)}
+                date={moment(item.createdAt).format('YYYY-MM-DD')}
+                len={item.announcementFiles.length}
+                obj={item.announcementFiles}
+                title={titleCase(item.title)}
               />
             );
           })

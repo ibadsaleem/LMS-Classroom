@@ -15,6 +15,7 @@ import ForgotPassword from '../Screens/ForgotPassword';
 import TeacherLogin from '../Screens/TeacherLogin';
 import TeacherProfile from '../Screens/TeacherProfile';
 import SplashScreen from '../Screens/SplashScreen';
+import AnnouncementView from '../Screens/AnnouncementView';
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -66,6 +67,11 @@ const MyStack = () => {
         <Stack.Screen
           name="ASSIGNMENT"
           component={AddAssignment}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ANNOUNCEMENTVIEW"
+          component={AnnouncementView}
           options={{headerShown: false}}
         />
         <Stack.Screen

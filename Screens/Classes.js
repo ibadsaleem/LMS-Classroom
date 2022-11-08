@@ -8,6 +8,7 @@ import {
   Alert,
   BackHandler,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,6 +18,7 @@ import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Classes = () => {
   const [courses, setCourses] = useState([]);
+  const [Loading,setLoading]=useState(true);
   useEffect(() => {
     classesEnrolled();
     const backAction = () => {
@@ -51,11 +53,13 @@ const Classes = () => {
     })
       .then(response => response.json())
       .then(async json => {
-        if (json.message === 'Unauthroized') {
-          navigation.navigate('LOGIN');
+        console.log(json)
+        if (json.message === 'Unauthroized'||json.message === 'Forbidden Access') {
           AsyncStorage.setItem('loginStatus', 'false');
+          navigation.navigate('LOGIN');
         }else{
           setCourses(json);
+          setLoading(false);
         }
       })
       
@@ -66,7 +70,17 @@ const Classes = () => {
       <ScrollView
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
-        {courses.map((item, index) => {
+        {Loading ?
+         <View>
+            <ActivityIndicator
+              size="large"
+              color="black"
+              style={{marginTop: 200}}
+            />
+            <Text style={{textAlign: 'center', color: 'black',fontWeight:'600',fontSize:15}}>
+              Loading Classes...
+            </Text>
+          </View> : courses.map((item, index) => {
           return (
             <ClassCard
               key={index}
