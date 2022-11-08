@@ -35,7 +35,7 @@ const Announcements = props => {
   const [loading, setloading] = useState(true);
   let loginMember = '';
   useEffect(() => {
-    // func();
+    func();
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -48,33 +48,55 @@ const Announcements = props => {
     return () => backHandler.remove();
   }, []);
 
-  // const func = async () => {
-  //   let jsonValue = await AsyncStorage.getItem('userinfo');
-  //   loginMember = await AsyncStorage.getItem('loginMember');
-  //   loginMember=='student'?fetch(
-  //     `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
-  //       },
-  //     },
-  //   )
-  //     .then(response => response.json())
-  //     .then(async json => {
-  //       if(json.message ==='Unauthroized'){
-  //         alert('You are not authorized to view this page')
-  //         AsyncStorage.setItem('loginStatus','false');
-  //         navigation.navigate('TEACHERLOGIN');
-  //       }else{
-  //         setannoucements(json);
-  //         console.log(json)
-  //         console.log(annoucements);
-  //         setloading(false);
-  //       }
-  //     }):null;
-  // };
+  const func = async () => {
+    let jsonValue = await AsyncStorage.getItem('userinfo');
+    loginMember = await AsyncStorage.getItem('loginMember');
+    loginMember=='student'?fetch(
+      `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(async json => {
+        if(json.message ==='Unauthroized'){
+          alert('You are not authorized to view this page')
+          AsyncStorage.setItem('loginStatus','false');
+          navigation.navigate('TEACHERLOGIN');
+        }else{
+          setannoucements(json);
+          console.log(json)
+          console.log(annoucements);
+          setloading(false);
+        }
+      }):fetch(
+        `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/annoucements/class/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+          },
+        },
+      )
+        .then(response => response.json())
+        .then(async json => {
+          console.log(json)
+          if(json.message ==='Unauthroized'){
+            alert('You are not authorized to view this page')
+            AsyncStorage.setItem('loginStatus','false');
+            navigation.navigate('TEACHERLOGIN');
+          }else{
+            setannoucements(json);
+            console.log(json)
+            setloading(false);
+          }
+        });
+  };
 
   const documentUpload = async () => {
     const doc = new FormData();
@@ -213,7 +235,7 @@ const Announcements = props => {
             </TouchableOpacity>
           </View>
         )}
-        {/* {loading || annoucements==[] ? (
+        {loading ? (
           <View>
             <ActivityIndicator
               size="large"
@@ -234,7 +256,7 @@ const Announcements = props => {
               />
             );
           })
-        )} */}
+        )}
       </ScrollView>
       {loginMember == 'student' ? (
         <BottomTab />

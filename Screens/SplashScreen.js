@@ -16,10 +16,12 @@ const SplashScreen = ({navigation}) => {
   //Used this GetLearnFundamentalApi just for checking the unauthorization purpose only
 
   const GetUser = async () => {
-    
+    loginMember=await AsyncStorage.getItem('loginMember');
+  
+    const apiCheck=loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes';
     const jsonValue = await AsyncStorage.getItem('userinfo');
     let i = await fetch(
-      'https://ipt-lms-1.herokuapp.com/api/user/Users',
+      apiCheck,
       {
         method: 'GET',
         headers: {
@@ -38,7 +40,7 @@ const SplashScreen = ({navigation}) => {
           setc(0);
         }
       })
-      .catch(error => {console.log("CHAL JA PLZ")});
+      .catch(error => {});
   };
 
   const CheckLogin = async () => {
