@@ -34,7 +34,7 @@ const Announcements = props => {
   const [annoucementtext, setannoucementtext] = useState('');
   const [isTeacher, setIsTeacher] = useState(true);
   const [loading, setloading] = useState(true);
-  let loginMember = '';
+  const [loginMember,setLoginMember]= useState('');
   useEffect(() => {
     setTimeout(() => {
       func();
@@ -54,8 +54,9 @@ const Announcements = props => {
 
   const func = async () => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
-    loginMember = await AsyncStorage.getItem('loginMember');
-    loginMember=='student'?fetch(
+    let loginMember = await AsyncStorage.getItem('loginMember');
+    setLoginMember(loginMember);
+    loginMember=='student'? fetch(
       `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
       {
         method: 'GET',
@@ -89,6 +90,7 @@ const Announcements = props => {
       )
         .then(response => response.json())
         .then(async json => {
+          console.log("HEELLO")
           // console.log(json)
           if(json.message ==='Unauthroized'){
             alert('You are not authorized to view this page')
@@ -138,7 +140,7 @@ const Announcements = props => {
   };
   const func_postannouncement = async a => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
-    loginMember = await AsyncStorage.getItem('loginMember');
+    let loginMember = await AsyncStorage.getItem('loginMember');
     fetch(
       `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/announcement/add/${id}`,
       {
@@ -199,7 +201,7 @@ const Announcements = props => {
             {titleCase(teacherName)}
           </Text>
         </View>
-        {loginMember == 'student' ? null : (
+        {loginMember === 'student' || loading? null : (
           <View
             style={{
               width: '95%',

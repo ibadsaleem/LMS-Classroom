@@ -50,7 +50,7 @@ const AnnouncementCard = (props) => {
          </View>
         </View>
  
-        <View style={{width:'95%',marginBottom:20,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey',justifyContent:'center'}}>
+        <View style={{width:'95%',marginBottom:10,height:42,borderWidth:0.80,alignSelf:'center',borderBottomLeftRadius:10,borderBottomRightRadius:10,borderColor:'lightgrey',justifyContent:'center'}}>
             <Text style={{padding:8,color:'black'}}><Entypo name='attachment' size={15} color='black'/>{' '}Attachments ({props.len})</Text>
         </View>
     </TouchableOpacity>

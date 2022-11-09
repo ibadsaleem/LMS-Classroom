@@ -19,6 +19,7 @@ const Profile = () => {
   const navigation = useNavigation();
   let jsonValue={};
   useEffect(() => {
+    func();
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -29,7 +30,6 @@ const Profile = () => {
       backAction,
     );
     return () => backHandler.remove();
-   func();
   })
   const logout= async ()=>{
     navigation.navigate("LOGIN");

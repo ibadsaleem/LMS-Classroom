@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import BottomTab from '../components/BottomTab';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { titleCase } from 'title-case';
 const TeacherProfile = () => {
   const [name,setName]=useState('')
   const [id,setID]=useState('')
@@ -37,6 +37,7 @@ const TeacherProfile = () => {
   }
   const func = async ()=>{
    jsonValue = await AsyncStorage.getItem('userinfo');
+   console.log(jsonValue)
    setID(JSON.parse(jsonValue).id);
    setName(JSON.parse(jsonValue).name);
     
@@ -60,7 +61,7 @@ const TeacherProfile = () => {
               fontWeight: '600',
               color: 'black',
             }}>
-            {id} - {name}
+            {id} - {titleCase(name)}
           </Text>
         </View>
         <View>
