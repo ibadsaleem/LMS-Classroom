@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   View,
   BackHandler,
-  TextInput,
+  TextInput
+  
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import BottomTab from '../components/BottomTab';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const Profile = () => {
   const [name,setName]=useState('')
   const [id,setID]=useState('')
@@ -30,7 +30,7 @@ const Profile = () => {
       backAction,
     );
     return () => backHandler.remove();
-  })
+  },[])
   const logout= async ()=>{
     navigation.navigate("LOGIN");
     await AsyncStorage.setItem('loginStatus', 'false');

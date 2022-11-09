@@ -30,14 +30,14 @@ const TeacherProfile = () => {
       backAction,
     );
     return () => backHandler.remove();
-  })
+  },[])
   const logout= async ()=>{
     navigation.navigate("LOGIN");
     await AsyncStorage.setItem('loginStatus', 'false');
   }
   const func = async ()=>{
    jsonValue = await AsyncStorage.getItem('userinfo');
-   console.log(jsonValue)
+   console.log('===>'+jsonValue)
    setID(JSON.parse(jsonValue).id);
    setName(JSON.parse(jsonValue).name);
     
@@ -61,7 +61,7 @@ const TeacherProfile = () => {
               fontWeight: '600',
               color: 'black',
             }}>
-            {id} - {titleCase(name)}
+            {id} - {name}
           </Text>
         </View>
         <View>
