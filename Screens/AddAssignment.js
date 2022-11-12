@@ -20,7 +20,7 @@ import Header from '../components/Header';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
 import moment from 'moment/moment';
 
 const AddAssignment = props => {
@@ -32,9 +32,10 @@ const AddAssignment = props => {
   const id = route.params['id'];
   const [attachmentCount, setattachmentCount] = useState(0);
   const [details, setDetails] = useState('');
+  const [title, setTitle] = useState('');
   const navigation = useNavigation();
-  const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false)
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const backAction = () => {
       navigation.goBack();
@@ -46,7 +47,7 @@ const AddAssignment = props => {
       backAction,
     );
     return () => backHandler.remove();
-  })
+  });
   const [media, setMedia] = useState([]);
   const docPicker = async () => {
     setattachmentCount(0);
@@ -58,7 +59,7 @@ const AddAssignment = props => {
   };
 
   const documentUpload = async () => {
-    if (details === '') {
+    if (details === '' || title === '') {
       alert('Kindly Provide Assignment Details');
     } else {
       setLoading(true);
@@ -66,7 +67,7 @@ const AddAssignment = props => {
       media.forEach(element => {
         doc.append('fileToUpload', element);
       });
-      doc.append('title', 'ASSIGNMENT');
+      doc.append('title', title);
       doc.append('announcementType', 'ASSIGNMENT');
       doc.append('description', details);
       doc.append('dueDate', dueDate);
@@ -112,18 +113,26 @@ const AddAssignment = props => {
           borderColor: 'lightgrey',
           flexDirection: 'row',
         }}>
-        <View style={{width: '10%', marginRight: 20}}>
+        <View style={{width: '10%', marginRight: 20,justifyContent:'center'}}>
           <Image
             source={require('../media/FAST.png')}
-            style={{width: 45, height: 45, borderRadius: 55}}
+            style={{width: 50, height: 50, borderRadius: 55}}
           />
         </View>
         <View style={{width: '75%'}}>
           <TextInput
             onChangeText={text => {
+              setTitle(text);
+            }}
+            placeholder="Add Assignment Title"
+            multiline={false}
+            value={details}></TextInput>
+          <View style={{borderBottomWidth: 0.3,marginTop:1,width:'90%',marginLeft:4}}></View>
+          <TextInput
+            onChangeText={text => {
               setDetails(text);
             }}
-            placeholder="Assignment Details"
+            placeholder="Add Assignment Details"
             multiline={true}
             value={details}></TextInput>
         </View>
@@ -147,7 +156,7 @@ const AddAssignment = props => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-          onPress={() => setOpen(true)}
+        onPress={() => setOpen(true)}
         style={{
           borderRadius: 10,
           width: 200,
@@ -157,17 +166,15 @@ const AddAssignment = props => {
           alignSelf: 'center',
           marginTop: 20,
         }}>
-        
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'white',
-              fontSize: 15,
-              fontWeight: '700',
-            }}>
-            Pick Due Date
-          </Text>
-        
+        <Text
+          style={{
+            textAlign: 'center',
+            color: 'white',
+            fontSize: 15,
+            fontWeight: '700',
+          }}>
+          Pick Due Date
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={documentUpload}
@@ -198,13 +205,13 @@ const AddAssignment = props => {
         modal
         open={open}
         date={date}
-        onConfirm={(date) => {
-          setOpen(false)
+        onConfirm={date => {
+          setOpen(false);
           setDate(date);
-          setDueDate(moment(date).format('YYYY-MM-DD'))
+          setDueDate(moment(date).format('YYYY-MM-DD'));
         }}
         onCancel={() => {
-          setOpen(false)
+          setOpen(false);
         }}
       />
     </View>

@@ -57,8 +57,7 @@ export default function BottomTab(props) {
 
       <TouchableOpacity
         onPress={() => {
-          
-          navigation.navigate('TEACHERADDCLASS');
+          loginMember=='student'?navigation.navigate('STUDENTCLASS'):navigation.navigate('ADDNEWCLASS');
         }}
         style={{marginRight: 40, justifyContent: 'center', width: 40}}>
         <Feather

@@ -42,6 +42,7 @@ const AddMaterial = props => {
   const id = route.params['id'];
   const [attachmentCount, setattachmentCount] = useState(0);
   const [details, setDetails] = useState('');
+  const [title, setTitle] = useState('');
   const navigation = useNavigation();
 
   const [media, setMedia] = useState([]);
@@ -55,7 +56,7 @@ const AddMaterial = props => {
   };
 
   const documentUpload = async () => {
-    if (details === '') {
+    if (details === '' || title === '') {
       alert('Kindly Provide Material Details');
     } else {
       setLoading(true);
@@ -109,18 +110,26 @@ const AddMaterial = props => {
           borderColor: 'lightgrey',
           flexDirection: 'row',
         }}>
-        <View style={{width: '10%', marginRight: 20}}>
+        <View style={{width: '10%', marginRight: 20,justifyContent:'center'}}>
           <Image
             source={require('../media/FAST.png')}
-            style={{width: 45, height: 45, borderRadius: 55}}
+            style={{width: 50, height: 50, borderRadius: 55}}
           />
         </View>
         <View style={{width: '75%'}}>
+        <TextInput
+            onChangeText={text => {
+              setTitle(text);
+            }}
+            placeholder="Add Material Title"
+            multiline={false}
+            value={details}></TextInput>
+          <View style={{borderBottomWidth: 0.3,marginTop:1,width:'90%',marginLeft:4}}></View>
           <TextInput
             onChangeText={text => {
               setDetails(text);
             }}
-            placeholder="Material Details"
+            placeholder="Add Material Details"
             multiline={true}
             value={details}></TextInput>
         </View>

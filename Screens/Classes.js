@@ -54,7 +54,7 @@ const Classes = () => {
       .then(response => response.json())
       .then(async json => {
         console.log(json)
-        if (json.message === 'Unauthroized'||json.message === 'Forbidden Access') {
+        if (json.message === 'Unauthroized'|| json.message === 'Forbidden Access') {
           AsyncStorage.setItem('loginStatus', 'false');
           navigation.navigate('LOGIN');
         }else{

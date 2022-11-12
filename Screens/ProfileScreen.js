@@ -1,4 +1,4 @@
-import {React,useEffect, useState} from 'react';
+import {React, useEffect, useState} from 'react';
 import {
   ScrollView,
   Text,
@@ -6,41 +6,43 @@ import {
   TouchableOpacity,
   View,
   BackHandler,
-  TextInput
-  
+  TextInput,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import BottomTab from '../components/BottomTab';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = () => {
-  const [name,setName]=useState('')
-  const [id,setID]=useState('')
+  const [name, setName] = useState('');
+  const [id, setID] = useState('');
   const navigation = useNavigation();
-  let jsonValue={};
+  let jsonValue = {};
   useEffect(() => {
     func();
     const backAction = () => {
       navigation.goBack();
       return true;
     };
-
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
     );
     return () => backHandler.remove();
-  },[])
-  const logout= async ()=>{
-    navigation.navigate("LOGIN");
+  }, []);
+
+ 
+
+  const logout = async () => {
+    navigation.navigate('LOGIN');
     await AsyncStorage.setItem('loginStatus', 'false');
-  }
-  const func = async ()=>{
-   jsonValue = await AsyncStorage.getItem('userinfo');
-   setID(JSON.parse(jsonValue).id);
-   setName(JSON.parse(jsonValue).firstName + ' ' + JSON.parse(jsonValue).lastName);
-    
-  }
+  };
+  const func = async () => {
+    jsonValue = await AsyncStorage.getItem('userinfo');
+    setID(JSON.parse(jsonValue).id);
+    setName(
+      JSON.parse(jsonValue).firstName + ' ' + JSON.parse(jsonValue).lastName,
+    );
+  };
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
       <View
@@ -126,12 +128,47 @@ const Profile = () => {
           <Text style={{color: 'green'}}>Done</Text>
         </TouchableOpacity>
       </View>
-          <TouchableOpacity onPress={logout} style={{borderRadius:40,width:'95%',height:50,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
-              <Text style={{fontSize:20,color:'black',fontWeight:'600'}}><MaterialCommunityIcons name='logout' style={{fontWeight:'600'}} size={25}/>{' '}Logout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigation.navigate("CHANGEPASSWORD")} style={{borderRadius:40,width:'95%',height:50,marginTop:20,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
-              <Text style={{fontSize:20,color:'black',fontWeight:'600'}}><MaterialCommunityIcons name='lock' style={{fontWeight:'600'}} size={25}/>{' '}Update Password</Text>
-          </TouchableOpacity>
+      <TouchableOpacity
+        onPress={logout}
+        style={{
+          borderRadius: 40,
+          width: '95%',
+          height: 50,
+          backgroundColor: '#EFEFEF',
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
+          <MaterialCommunityIcons
+            name="logout"
+            style={{fontWeight: '600'}}
+            size={25}
+          />{' '}
+          Logout
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('CHANGEPASSWORD')}
+        style={{
+          borderRadius: 40,
+          width: '95%',
+          height: 50,
+          marginTop: 20,
+          backgroundColor: '#EFEFEF',
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
+          <MaterialCommunityIcons
+            name="lock"
+            style={{fontWeight: '600'}}
+            size={25}
+          />{' '}
+          Update Password
+        </Text>
+      </TouchableOpacity>
       <ScrollView>
         <TouchableOpacity
           style={{
@@ -140,8 +177,8 @@ const Profile = () => {
             width: '95%',
             justifyContent: 'center',
             alignSelf: 'center',
-            borderBottomWidth:0.8,
-            borderBottomColor:'lightgrey'
+            borderBottomWidth: 0.8,
+            borderBottomColor: 'lightgrey',
           }}>
           <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
             Assignment 1
@@ -154,8 +191,8 @@ const Profile = () => {
             width: '95%',
             justifyContent: 'center',
             alignSelf: 'center',
-            borderBottomWidth:0.8,
-            borderBottomColor:'lightgrey'
+            borderBottomWidth: 0.8,
+            borderBottomColor: 'lightgrey',
           }}>
           <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
             Assignment 2
@@ -168,8 +205,8 @@ const Profile = () => {
             width: '95%',
             justifyContent: 'center',
             alignSelf: 'center',
-            borderBottomWidth:0.8,
-            borderBottomColor:'lightgrey'
+            borderBottomWidth: 0.8,
+            borderBottomColor: 'lightgrey',
           }}>
           <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
             Assignment 3

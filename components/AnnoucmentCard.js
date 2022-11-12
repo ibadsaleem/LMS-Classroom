@@ -40,7 +40,14 @@ const AnnouncementCard = (props) => {
             </View>
             <View>
                 <Text style={{fontSize: 15, fontWeight: '500', color: 'black'}}>{props.teacher}</Text>
-                <Text style={{fontSize: 10, fontWeight: '700', color: 'grey'}}>{moment(props.date).date()+' '+month[moment(props.date).month()-1]+' '+moment(props.date).year()}</Text>
+                <View style={{flexDirection:'row'}}>
+                  <View>
+                <Text style={{fontSize: 10, fontWeight: '700', color: 'grey'}}>{moment(props.date).date()+' '+month[moment(props.date).month()]+' '+moment(props.date).year()}</Text>
+                  </View>
+                  {props.type=='ASSIGNMENT'?<View style={{backgroundColor:'#EFEFEF',marginLeft:5}}>
+                <Text style={{fontSize: 10, fontWeight: '700', color: 'black'}}>{props.type}</Text>
+                  </View>:null}
+                </View>
             </View>
           </View>
          <View>

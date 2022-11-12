@@ -7,19 +7,24 @@ import {
   View,
   BackHandler,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import BottomTab from '../components/BottomTab';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { titleCase } from 'title-case';
+import moment from 'moment';
 const TeacherProfile = () => {
+  const [Loading, setLoading] = useState(true);
   const [name,setName]=useState('')
   const [id,setID]=useState('')
+  const [assignments,setAssignments]=useState([])
   const navigation = useNavigation();
   let jsonValue={};
   useEffect(() => {
     func();
+    getAllAssignments();
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -31,6 +36,26 @@ const TeacherProfile = () => {
     );
     return () => backHandler.remove();
   },[])
+
+  const getAllAssignments = async () => {
+    let jsonValue=await AsyncStorage.getItem('userinfo');
+    fetch(
+      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/announcements/all`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        setAssignments(json);
+        setLoading(false);
+        // console.log(json);
+      });
+  };
   const logout= async ()=>{
     navigation.navigate("LOGIN");
     await AsyncStorage.setItem('loginStatus', 'false');
@@ -39,7 +64,7 @@ const TeacherProfile = () => {
    jsonValue = await AsyncStorage.getItem('userinfo');
    console.log('===>'+jsonValue)
    setID(JSON.parse(jsonValue).id);
-   setName(JSON.parse(jsonValue).name);
+   setName(titleCase(JSON.parse(jsonValue).name));
     
   }
   return (
@@ -120,28 +145,56 @@ const TeacherProfile = () => {
           <TouchableOpacity onPress={()=>navigation.navigate("CHANGEPASSWORD")} style={{borderRadius:40,width:'95%',height:50,marginTop:20,backgroundColor:'#EFEFEF',alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
               <Text style={{fontSize:20,color:'black',fontWeight:'600'}}><MaterialCommunityIcons name='lock' style={{fontWeight:'600'}} size={25}/>{' '}Update Password</Text>
           </TouchableOpacity>
+      <View style={{
+                padding: 10,
+                marginTop: 20,
+                width: '95%',
+                justifyContent: 'center',
+                alignSelf: 'center',
+             
+              }}>
+        <Text style={{fontSize:25,color:'black',fontWeight:'700'}}>Assignments</Text>
+      </View>
+      <View style={{flexDirection:'row'}}>
+
+      <View style={{width:100,height:4,marginLeft:20,backgroundColor:'black'}}></View>
+              <View style={{width:4,height:4,backgroundColor:'black',marginLeft:5,borderRadius:50}}></View>
+      </View>
       <ScrollView>
         
 
-        <TouchableOpacity
-          style={{
-              padding: 10,
-              marginTop: 20,
-              width: '95%',
-              justifyContent: 'center',
-              alignSelf: 'center',
-           
-            }}>
-          <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
-            Assignment 1
-          </Text>
-          <Text style={{fontSize: 10, color: 'violet', fontWeight: '600'}}>
-            Class: IPT-7G
-          </Text>
-          <Text style={{fontSize: 10, color: 'red', fontWeight: '600'}}>
-            Deadline: 28-Oct-2022
-          </Text>
-        </TouchableOpacity>
+     {Loading?
+     <View style={{justifyContent:'center',marginTop:100}}>
+
+     <ActivityIndicator size={40} color="black"/>
+     <Text style={{textAlign:'center',color:'black',fontWeight:'700',marginTop:5}}>Loading Assignments...</Text>
+     </View>:
+        assignments.map((item,index)=>{
+          return(
+            <View
+            style={{
+                padding: 10,
+                paddingBottom:0,
+                marginTop: 10,
+                width: '95%',
+                justifyContent: 'center',
+                alignSelf: 'center',
+             
+              }}>
+            <Text style={{fontSize: 20, color: 'black', fontWeight: '600'}}>
+              {titleCase(item.title)}
+            </Text>
+            <Text style={{fontSize: 10, color: 'violet', fontWeight: '600'}}>
+              Class: {titleCase(item.class.course + '-' + item.class.section)}
+            </Text>
+            <Text style={{fontSize: 10, color: 'red', fontWeight: '600',marginBottom:10}}>
+              Deadline: {moment(item.dueDate).format('DD-MM-YYYY hh:mm A')}
+            </Text>
+            <View style={{borderBottomWidth:0.5,width:'50%',borderColor:'black'}}></View>
+          </View>
+          );
+        })
+     }
         
         
       

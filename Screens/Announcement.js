@@ -34,11 +34,12 @@ const Announcements = props => {
   const [annoucementtext, setannoucementtext] = useState('');
   const [isTeacher, setIsTeacher] = useState(true);
   const [loading, setloading] = useState(true);
+  const [loading1, setloading1] = useState(false);
   const [loginMember,setLoginMember]= useState('');
   useEffect(() => {
-    setTimeout(() => {
+    
       func();
-    }, 1000);
+    
 
     const backAction = () => {
       navigation.goBack();
@@ -139,6 +140,7 @@ const Announcements = props => {
       });
   };
   const func_postannouncement = async a => {
+    setloading1(true);
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
     fetch(
@@ -160,7 +162,8 @@ const Announcements = props => {
       .then(response => response.json())
       .then(json => {
         setannoucementtext('');
-        // console.log(json.message);
+        setloading1(false);
+        func();
       });
   };
 
@@ -232,11 +235,11 @@ const Announcements = props => {
                 onPress={
                   () => func_postannouncement('ANNOUNCEMENT')
                 }>
-                <MaterialCommunityIcons
+                {loading1?<ActivityIndicator size={20} color='black'/>:<MaterialCommunityIcons
                   name="send-circle"
                   size={30}
                   color="blue"
-                />
+                />}
               </TouchableOpacity>
             </TouchableOpacity>
           </View>
@@ -263,6 +266,7 @@ const Announcements = props => {
                 len={item.announcementFiles.length}
                 obj={item.announcementFiles}
                 title={titleCase(item.title)}
+                type={item.announcementType}
               />
             );
           })
