@@ -257,6 +257,7 @@ const Announcements = props => {
           </View>
         ) : (
           annoucements.map((item, index) => {
+            console.log(item)
             return (
               <AnnouncementCard
                 key={index}
@@ -267,6 +268,7 @@ const Announcements = props => {
                 obj={item.announcementFiles}
                 title={titleCase(item.title)}
                 type={item.announcementType}
+                id_Annoucement={item.announcementId}
               />
             );
           })

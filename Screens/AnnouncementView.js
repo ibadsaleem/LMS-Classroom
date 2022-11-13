@@ -27,10 +27,84 @@ import RNFetchBlob from 'rn-fetch-blob';
 const AnnouncementView = props => {
   const navigation = useNavigation();
   const route = useRoute();
+  const [attachmentCount, setattachmentCount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const content = route.params['obj'];
   const date = route.params['date'];
-//   console.log(content.obj);
-const downloadFile=async(link,filename)=>{
+  const [loginMember,setLoginMember]= useState('');
+  const [media, setMedia] = useState([]);
+  const [type,setType]=useState('');
+  useEffect(() => {
+
+    console.log(content.type)
+    func()  
+    
+  },[])
+
+  const docPicker = async () => {
+    setattachmentCount(0);
+    const res = await DocumentPicker.pickMultiple({
+      type: [DocumentPicker.types.allFiles],
+    });
+    setMedia(res);
+    setattachmentCount(res.length);
+  };
+
+  const documentUpload = async () => {
+    if (attachmentCount==0){
+      alert("Please attach file")
+    }else{
+
+      setLoading(true);
+      const doc = new FormData();
+      media.forEach(element => {
+        doc.append('fileToUpload', element);
+      });
+      let jsonValue = await AsyncStorage.getItem('userinfo');
+      let id = content.obj[0].announcementId
+      fetch(
+        `https://ipt-lms-1.herokuapp.com/api/user/Users/upload/assignment/${id}`,
+        {
+          method: 'POST',
+          headers: {
+            // 'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+          },
+          body: doc,
+        },
+        )
+        .then(response => response.json())
+        .then(data => {
+          if (data.success==1)
+          {setMedia([]);
+          setattachmentCount(0);
+          setLoading(false);
+          alert('Assignment Submitted Successfully');
+          console.log(data);}
+          else{
+            alert('Something went wrong');
+            setLoading(false);
+          }
+        })
+        .catch(error => {
+          setLoading(false)
+          console.log('======>');
+          console.error(error);
+        });
+      }
+    
+  };
+
+
+
+  const func=async()=>{
+    let _loginMember = await AsyncStorage.getItem('loginMember');
+    setLoginMember(_loginMember);
+    setType(content.type)
+  }
+  
+  const downloadFile=async(link,filename)=>{
+    console.log(loginMember)
    fetch(
     `https://ipt-lms-1.herokuapp.com/Files/${filename}`,
     {
@@ -125,6 +199,17 @@ const downloadFile=async(link,filename)=>{
           )}
         </View>
       </View>
+    {loginMember=='student' && type=='ASSIGNMENT'?<>
+      <TouchableOpacity onPress={docPicker} style={{width:170,height:50,justifyContent:'center',backgroundColor:'#0099cc',alignSelf:'center',marginTop:30,borderRadius:10}}>
+
+        <Text style={{color:'white',fontSize:15,textAlign:'center',fontWeight:'700'}}>Attach Files ({attachmentCount})</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={documentUpload} style={{width:170,height:50,justifyContent:'center',backgroundColor:'#0050ee',alignSelf:'center',marginTop:30,borderRadius:10}}>
+
+      {loading?<ActivityIndicator size={30} color='white'/> :<Text style={{color:'white',fontSize:15,textAlign:'center',fontWeight:'700'}}>Submit Assignment</Text>
+      }
+      </TouchableOpacity>
+    </>:null}  
     </View>
   );
 };
