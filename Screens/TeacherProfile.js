@@ -58,9 +58,9 @@ const TeacherProfile = () => {
       });
   };
   const logout= async ()=>{
+    navigation.navigate("LOGIN");
     await AsyncStorage.setItem('loginStatus', 'false');
     await AsyncStorage.setItem('loginMember', '');
-    navigation.navigate("LOGIN");
   }
   const func = async ()=>{
    jsonValue = await AsyncStorage.getItem('userinfo');

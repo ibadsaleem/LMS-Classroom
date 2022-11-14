@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Text, TouchableOpacity, View,BackHandler} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import BottomTab from '../components/BottomTab';

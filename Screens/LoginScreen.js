@@ -13,6 +13,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
+  
   const [email, setemail] = useState(null);
   const [password, setpassword] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,17 @@ const Login = ({navigation}) => {
     setemail('');
     setpassword('');
   };
-  let onClickLogin = () => {
+  useEffect(() => {
+    resetAsyncStorage();
+  },[])
+  const resetAsyncStorage = async () => {
+    await AsyncStorage.setItem('loginStatus', '');
+    await AsyncStorage.setItem('loginMember', '');
+  }
+  let onClickLogin = async() => {
+    await AsyncStorage.setItem('loginStatus', '');
+    await AsyncStorage.setItem('loginMember', '');
+
     setLoading(true);
     //API CALL for submitting data
     fetch('https://ipt-lms-1.herokuapp.com/api/user/Users/Login', {

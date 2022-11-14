@@ -21,7 +21,9 @@ const TeacherLogin = ({navigation}) => {
     setusername('');
     setpassword('');
   };
-  let onClickLogin = () => {
+  let onClickLogin = async() => {
+    await AsyncStorage.setItem('loginStatus', '');
+    await AsyncStorage.setItem('loginMember', '');
     setLoading(true);
     //API CALL for submitting data
     fetch('https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/Login', {

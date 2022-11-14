@@ -11,16 +11,21 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
+import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import ClassCard from '../components/ClassCard';
 import BottomTab from '../components/BottomTab';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Classes = () => {
+  const route = useRoute();
   const [courses, setCourses] = useState([]);
   const [Loading,setLoading]=useState(true);
   const [refreshing,setRefreshing]=useState(false);
+  const [flag,setFlag]=useState(0);
+  const [LoginMember,setLoginMember]=useState(0);
   const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
@@ -28,8 +33,10 @@ const Classes = () => {
     setRefreshing(true);
     classesEnrolled();
   }
+  
+  const isFocused = useIsFocused();
   useEffect(() => {
-    classesEnrolled();
+
     const backAction = () => {
       Alert.alert('Hold on!', 'Are you sure you want to exit?', [
         {
@@ -41,18 +48,20 @@ const Classes = () => {
       ]);
       return true;
     };
-
+    
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
-    );
+      );
+      classesEnrolled();
     return () => backHandler.remove();
-  }, []);
+  },[isFocused]);
   const navigation = useNavigation();
   const classesEnrolled = async () => {
     setLoading(true);
-    console.log('classesEnrolled');
+    // console.log('classesEnrolled');
     let loginMember = await AsyncStorage.getItem('loginMember');
+    setLoginMember(loginMember=='student'?0:1);
     let api = loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users/classes':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes'
     let jsonValue = await AsyncStorage.getItem('userinfo');
     fetch(api, {
@@ -64,7 +73,7 @@ const Classes = () => {
     })
       .then(response => response.json())
       .then(async json => {
-        console.log(json)
+        // console.log(json)
         if (json.message === 'Unauthroized'|| json.message === 'Forbidden Access') {
           setRefreshing(false);
           AsyncStorage.setItem('loginStatus', 'false');
