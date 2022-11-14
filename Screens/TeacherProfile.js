@@ -51,6 +51,7 @@ const TeacherProfile = () => {
     )
       .then(response => response.json())
       .then(json => {
+       
         setAssignments(json);
         setLoading(false);
         // console.log(json);
@@ -170,8 +171,10 @@ const TeacherProfile = () => {
      <Text style={{textAlign:'center',color:'black',fontWeight:'700',marginTop:5}}>Loading Assignments...</Text>
      </View>:
         assignments.map((item,index)=>{
+          console.log(item)
           return(
             <View
+            key={index}
             style={{
                 padding: 10,
                 paddingBottom:0,

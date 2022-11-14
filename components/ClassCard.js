@@ -16,7 +16,7 @@ const ClassCard=(props) =>{
 
 
   return (
-    <TouchableOpacity onPress={()=>navigation.navigate("ANNOUNCEMENTS",{name:props.name,teacherName:props.teacher,id:props.id})}  style={{borderRadius:15,width:'95%',height:270,backgroundColor:'#ffffff',marginTop:20,alignSelf:'center',elevation:8,marginBottom:10}}>
+    <TouchableOpacity onPress={()=>navigation.navigate("ANNOUNCEMENTS",{name:props.name,teacherName:props.teacher,id:props.id,courseCode:props.courseCode})}  style={{borderRadius:15,width:'95%',height:270,backgroundColor:'#ffffff',marginTop:20,alignSelf:'center',elevation:8,marginBottom:10}}>
     <Image source={props.cover} style={{width:'100%',height:170,borderTopRightRadius:15,borderTopLeftRadius:15}} />
     <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
     <View style={{}}>

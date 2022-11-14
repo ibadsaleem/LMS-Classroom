@@ -66,7 +66,7 @@ const Classes = () => {
   };
   return (
     <View style={{width: '100%', height: '100%'}}>
-      <Header title="Enrolled Classes" hidden={true} />
+      <Header title="Classes" hidden={true} />
       <ScrollView
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
@@ -89,6 +89,7 @@ const Classes = () => {
               teacher={item.instructor.name}
               cover={require('../media/IS.jpg')}
               id={item.id}
+              courseCode={item.classCode}
             />
           );
         })}

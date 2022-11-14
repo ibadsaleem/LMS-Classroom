@@ -28,6 +28,7 @@ const Announcements = props => {
   const route = useRoute();
   const name = route.params['name'];
   const teacherName = route.params['teacherName'];
+  const courseCode = route.params['courseCode'];
   const navigation = useNavigation();
   const id = route.params['id'];
   const [annoucements, setannoucements] = useState([]);
@@ -91,8 +92,6 @@ const Announcements = props => {
       )
         .then(response => response.json())
         .then(async json => {
-          console.log("HEELLO")
-          // console.log(json)
           if(json.message ==='Unauthroized'){
             alert('You are not authorized to view this page')
             AsyncStorage.setItem('loginStatus','false');
@@ -203,6 +202,9 @@ const Announcements = props => {
           <Text style={{color: '#000000', fontSize: 20}}>
             {titleCase(teacherName)}
           </Text>
+          {loginMember=='teacher'?<Text style={{color: '#000000', fontSize: 20,fontWeight:'600'}}>
+            {'Class Code: '+courseCode}
+          </Text>:null}
         </View>
         {loginMember === 'student' || loading? null : (
           <View
@@ -244,6 +246,7 @@ const Announcements = props => {
             </TouchableOpacity>
           </View>
         )}
+        
         {loading ? (
           <View>
             <ActivityIndicator
@@ -256,8 +259,7 @@ const Announcements = props => {
             </Text>
           </View>
         ) : (
-          annoucements.map((item, index) => {
-            console.log(item)
+          annoucements.length==0? <Text style={{textAlign:'center',fontSize:25,fontWeight:'600',color:'black',marginTop:100}}>No Announcements Found </Text>:annoucements.map((item, index) => {
             return (
               <AnnouncementCard
                 key={index}
@@ -272,7 +274,9 @@ const Announcements = props => {
               />
             );
           })
-        )}
+        )
+        
+        }
       </ScrollView>
       {loginMember == 'student' ? (
         <BottomTab />
