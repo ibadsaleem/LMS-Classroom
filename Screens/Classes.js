@@ -1,6 +1,7 @@
 import {React, useEffect, useState} from 'react';
 import {
   ScrollView,
+  RefreshControl,
   Text,
   Image,
   TouchableOpacity,
@@ -19,6 +20,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Classes = () => {
   const [courses, setCourses] = useState([]);
   const [Loading,setLoading]=useState(true);
+  const [refreshing,setRefreshing]=useState(false);
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = () => {
+    setRefreshing(true);
+    classesEnrolled();
+  }
   useEffect(() => {
     classesEnrolled();
     const backAction = () => {
@@ -41,6 +50,8 @@ const Classes = () => {
   }, []);
   const navigation = useNavigation();
   const classesEnrolled = async () => {
+    setLoading(true);
+    console.log('classesEnrolled');
     let loginMember = await AsyncStorage.getItem('loginMember');
     let api = loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users/classes':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes'
     let jsonValue = await AsyncStorage.getItem('userinfo');
@@ -55,10 +66,12 @@ const Classes = () => {
       .then(async json => {
         console.log(json)
         if (json.message === 'Unauthroized'|| json.message === 'Forbidden Access') {
+          setRefreshing(false);
           AsyncStorage.setItem('loginStatus', 'false');
           navigation.navigate('LOGIN');
         }else{
           setCourses(json);
+          setRefreshing(false);
           setLoading(false);
         }
       })
@@ -68,6 +81,12 @@ const Classes = () => {
     <View style={{width: '100%', height: '100%'}}>
       <Header title="Classes" hidden={true} />
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
         {Loading ?

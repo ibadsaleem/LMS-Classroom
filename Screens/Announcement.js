@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
+  RefreshControl,
   Text,
   Image,
   TouchableOpacity,
@@ -37,9 +38,17 @@ const Announcements = props => {
   const [loading, setloading] = useState(true);
   const [loading1, setloading1] = useState(false);
   const [loginMember,setLoginMember]= useState('');
+  const [refreshing,setRefreshing]=useState(false);
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = () => {
+    setRefreshing(true);
+    getAllAnnouncements();
+  }
   useEffect(() => {
     
-      func();
+      getAllAnnouncements();
     
 
     const backAction = () => {
@@ -54,7 +63,8 @@ const Announcements = props => {
     return () => {backHandler.remove();clearTimeout()};
   }, []);
 
-  const func = async () => {
+  const getAllAnnouncements = async () => {
+    setloading(true);
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
     setLoginMember(loginMember);
@@ -73,9 +83,11 @@ const Announcements = props => {
         if(json.message ==='Unauthroized'){
           alert('You are not authorized to view this page')
           AsyncStorage.setItem('loginStatus','false');
+          setloading(false);
           navigation.navigate('TEACHERLOGIN');
         }else{
           setannoucements(json);
+          setRefreshing(false)
           // console.log(json)
           // console.log(annoucements);
           setloading(false);
@@ -94,10 +106,12 @@ const Announcements = props => {
         .then(async json => {
           if(json.message ==='Unauthroized'){
             alert('You are not authorized to view this page')
+            setRefreshing(false);
             AsyncStorage.setItem('loginStatus','false');
             navigation.navigate('TEACHERLOGIN');
           }else{
             setannoucements(json);
+            setRefreshing(false);
             // console.log(json)
             setloading(false);
           }
@@ -162,7 +176,7 @@ const Announcements = props => {
       .then(json => {
         setannoucementtext('');
         setloading1(false);
-        func();
+        getAllAnnouncements();
       });
   };
 
@@ -184,6 +198,12 @@ const Announcements = props => {
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
       <ScrollView
+     refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
+    }
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
         <Header title={'Class Announcement'} hidden={false} />
