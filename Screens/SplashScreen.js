@@ -32,6 +32,7 @@ const SplashScreen = ({navigation}) => {
     )
       .then(response => response.json())
       .then( async json => {
+        console.log(json)
         msg=json.message;
         if (json.message === 'Unauthroized') {
           Alert.alert('Session Expired', 'Please Login Again');
@@ -46,6 +47,7 @@ const SplashScreen = ({navigation}) => {
   const CheckLogin = async () => {
     const LoginStatus = await AsyncStorage.getItem('loginStatus');
     const LoginMember = await AsyncStorage.getItem('loginMember');
+    console.log(LoginStatus)
     if (LoginStatus == 'true') {
      await  GetUser();
       await sleep(2000);

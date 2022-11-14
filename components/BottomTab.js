@@ -13,7 +13,7 @@ export default function BottomTab(props) {
   const navigation = useNavigation();
   useEffect(() => {
     func();
-  });
+  },[]);
   const func = async () => {
     const loginMember= await AsyncStorage.getItem('loginMember');
     setLoginMember(loginMember);
@@ -79,9 +79,9 @@ export default function BottomTab(props) {
       <TouchableOpacity
       onPress={() => {
         
-          {
+          
             loginMember=='teacher'? navigation.navigate('TEACHERPROFILE'):navigation.navigate('PROFILE');
-          }
+          
 
       }}
       style={{justifyContent: 'center', width: 40}}>
