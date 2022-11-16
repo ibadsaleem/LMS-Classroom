@@ -58,7 +58,7 @@ export default function BottomTab(props) {
       <TouchableOpacity
         onPress={async() => {
           let loginMember1= await AsyncStorage.getItem('loginMember');
-          console.log(loginMember1)
+          
           loginMember1=='student'?navigation.navigate('STUDENTCLASS'):navigation.navigate('ADDNEWCLASS');
         }}
         style={{marginRight: 40, justifyContent: 'center', width: 40}}>
@@ -81,7 +81,7 @@ export default function BottomTab(props) {
       <TouchableOpacity
       onPress={() => {
         
-          console.log('===========>',loginMember)
+          
             loginMember=='teacher'? navigation.navigate('TEACHERPROFILE'):navigation.navigate('PROFILE');
           
 

@@ -87,10 +87,10 @@ const AddMaterial = props => {
           setDetails('');
           setLoading(false);
           alert('Material Uploaded');
-          console.log(data);
+          
         })
         .catch(error => {
-          console.log('======>');
+          
           console.error(error);
         });
     }

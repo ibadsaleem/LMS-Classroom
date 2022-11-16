@@ -36,8 +36,18 @@ const AnnouncementView = props => {
   const [type,setType]=useState('');
   useEffect(() => {
 
-    console.log(content.type)
+    
     func()  
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => backHandler.remove();
     
   },[])
 
@@ -80,7 +90,7 @@ const AnnouncementView = props => {
           setattachmentCount(0);
           setLoading(false);
           alert('Assignment Submitted Successfully');
-          console.log(data);}
+          }
           else{
             alert('Something went wrong');
             setLoading(false);
@@ -88,7 +98,7 @@ const AnnouncementView = props => {
         })
         .catch(error => {
           setLoading(false)
-          console.log('======>');
+          
           console.error(error);
         });
       }
@@ -104,7 +114,7 @@ const AnnouncementView = props => {
   }
   
   const downloadFile=async(link,filename)=>{
-    console.log(loginMember)
+    
    fetch(
     `https://ipt-lms-1.herokuapp.com/Files/${filename}`,
     {
@@ -117,7 +127,7 @@ const AnnouncementView = props => {
     .then(response => response.json())
     .then(json => {
      
-      console.log(json);
+      
     });
 }
   return (

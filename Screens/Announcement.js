@@ -21,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 import {titleCase} from 'title-case';
 import moment from 'moment';
+import { useIsFocused } from "@react-navigation/native";
+
 //Add AAAAAAAAA
 // Add button for file upload and change the function as per count
 
@@ -46,22 +48,26 @@ const Announcements = props => {
     setRefreshing(true);
     getAllAnnouncements();
   }
+  const isFocused_Announcement = useIsFocused();
   useEffect(() => {
-    
-      getAllAnnouncements();
-    
-
     const backAction = () => {
       navigation.goBack();
       return true;
     };
-
+    
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
-    );
-    return () => {backHandler.remove();clearTimeout()};
-  }, []);
+      );
+      
+      return () => {backHandler.remove()};
+    
+
+  })
+
+  useEffect(() => {
+      getAllAnnouncements();
+  }, [isFocused_Announcement]);
 
   const getAllAnnouncements = async () => {
     setloading(true);
@@ -88,8 +94,8 @@ const Announcements = props => {
         }else{
           setannoucements(json);
           setRefreshing(false)
-          // console.log(json)
-          // console.log(annoucements);
+          // 
+          // 
           setloading(false);
         }
       }):fetch(
@@ -112,7 +118,7 @@ const Announcements = props => {
           }else{
             setannoucements(json);
             setRefreshing(false);
-            // console.log(json)
+            // 
             setloading(false);
           }
         });
@@ -143,7 +149,7 @@ const Announcements = props => {
     )
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
+        // 
       })
       .catch ((err) =>{
         if (DocumentPicker.isCancel(err)) {

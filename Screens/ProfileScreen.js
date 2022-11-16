@@ -18,16 +18,23 @@ const Profile = () => {
   const navigation = useNavigation();
   let jsonValue = {};
   useEffect(() => {
-    func();
     const backAction = () => {
       navigation.goBack();
       return true;
     };
+    
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
-    );
-    return () => backHandler.remove();
+      );
+      
+      return () => {backHandler.remove()};
+    
+
+  })
+  useEffect(() => {
+    func();
+
   }, []);
 
  

@@ -9,6 +9,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import BottomTab from '../components/BottomTab';
 import {useNavigation} from '@react-navigation/native';
@@ -22,20 +23,36 @@ const TeacherProfile = () => {
   const [assignments,setAssignments]=useState([])
   const navigation = useNavigation();
   let jsonValue={};
+  const isFocused = useIsFocused();
   useEffect(() => {
-    func();
-    getAllAssignments();
     const backAction = () => {
       navigation.goBack();
       return true;
     };
-
+    
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
-    );
-    return () => backHandler.remove();
-  },[])
+      );
+      
+      return () => {backHandler.remove()};
+    
+
+  })
+  useEffect(() => {
+    func();
+    getAllAssignments();
+    // const backAction = () => {
+    //   navigation.goBack();
+    //   return true;
+    // };
+
+    // const backHandler = BackHandler.addEventListener(
+    //   'hardwareBackPress',
+    //   backAction,
+    // );
+    // return () => backHandler.remove();
+  },[isFocused])
 
   const getAllAssignments = async () => {
     let jsonValue=await AsyncStorage.getItem('userinfo');
@@ -54,7 +71,7 @@ const TeacherProfile = () => {
        
         setAssignments(json);
         setLoading(false);
-        // console.log(json);
+        // 
       });
   };
   const logout= async ()=>{
@@ -64,7 +81,7 @@ const TeacherProfile = () => {
   }
   const func = async ()=>{
    jsonValue = await AsyncStorage.getItem('userinfo');
-   console.log('===>'+jsonValue)
+   
    setID(JSON.parse(jsonValue).id);
    setName(titleCase(JSON.parse(jsonValue).name));
     
@@ -172,7 +189,7 @@ const TeacherProfile = () => {
      <Text style={{textAlign:'center',color:'black',fontWeight:'700',marginTop:5}}>Loading Assignments...</Text>
      </View>:
         assignments.map((item,index)=>{
-          console.log(item)
+          
           return(
             <View
             key={index}
@@ -189,7 +206,7 @@ const TeacherProfile = () => {
               {titleCase(item.title)}
             </Text>
             <Text style={{fontSize: 10, color: 'violet', fontWeight: '600'}}>
-              Class: {titleCase(item.class.course + '-' + item.class.section)}
+              Class: {titleCase(item.class.course.courseName + '-' + item.class.section)}
             </Text>
             <Text style={{fontSize: 10, color: 'red', fontWeight: '600',marginBottom:10}}>
               Deadline: {moment(item.dueDate).format('DD-MM-YYYY hh:mm A')}

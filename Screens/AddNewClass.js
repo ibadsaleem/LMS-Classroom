@@ -12,6 +12,7 @@ import Header from '../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import {useIsFocused} from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const AddNewClass = () => {
@@ -23,21 +24,28 @@ const AddNewClass = () => {
   const [key, setKey] = useState(0);
   const [courseID, setcourseID] = useState([])
   const navigation = useNavigation();
-  
   useEffect(() => {
-    console.log('s')
-    coursesClass();
     const backAction = () => {
       navigation.goBack();
       return true;
     };
-
+    
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
-    );
-    return () => backHandler.remove();
-  }, []);
+      );
+      
+      return () => {backHandler.remove()};
+    
+
+  })
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    
+    coursesClass();
+    
+  }, [isFocused]);
   const createClass = async () => {
     setLoading(true);
     let jsonValue = await AsyncStorage.getItem('userinfo');
@@ -59,7 +67,7 @@ const AddNewClass = () => {
         setLoading(false);
         alert('Class Created Successfully');
         navigation.navigate('CLASS');
-        console.log(json);
+        
       });
   };
   const coursesClass = async () => {
@@ -74,16 +82,16 @@ const AddNewClass = () => {
     })
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        
         setcourseID([])
         json.forEach((element,index) => {
-          console.log(index)
+          
           setcourseID(courseID => [...courseID, {id:index,label: element.courseID,value:element.courseID}]);
         });
       });
   };
   const funcs = () => {
-    console.log(courseID);
+    
   };
   return (
     <View style={{backgroundColor: '#ffffff', height: '100%', width: '100%'}}>

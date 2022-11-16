@@ -90,10 +90,10 @@ const AddAssignment = props => {
           setDetails('');
           setLoading(false);
           alert('Assignment Uploaded');
-          console.log(data);
+          
         })
         .catch(error => {
-          console.log('======>');
+          
           console.error(error);
         });
     }

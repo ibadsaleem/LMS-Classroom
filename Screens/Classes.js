@@ -36,7 +36,6 @@ const Classes = () => {
   
   const isFocused = useIsFocused();
   useEffect(() => {
-
     const backAction = () => {
       Alert.alert('Hold on!', 'Are you sure you want to exit?', [
         {
@@ -53,13 +52,21 @@ const Classes = () => {
       'hardwareBackPress',
       backAction,
       );
+      
+      return () => {backHandler.remove()};
+    
+
+  })
+  useEffect(() => {
+    
       classesEnrolled();
-    return () => backHandler.remove();
   },[isFocused]);
+
+
   const navigation = useNavigation();
   const classesEnrolled = async () => {
     setLoading(true);
-    // console.log('classesEnrolled');
+    // 
     let loginMember = await AsyncStorage.getItem('loginMember');
     setLoginMember(loginMember=='student'?0:1);
     let api = loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users/classes':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes'
@@ -73,7 +80,7 @@ const Classes = () => {
     })
       .then(response => response.json())
       .then(async json => {
-        // console.log(json)
+        // 
         if (json.message === 'Unauthroized'|| json.message === 'Forbidden Access') {
           setRefreshing(false);
           AsyncStorage.setItem('loginStatus', 'false');
