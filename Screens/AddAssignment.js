@@ -88,6 +88,7 @@ const AddAssignment = props => {
           setMedia([]);
           setattachmentCount(0);
           setDetails('');
+          setTitle('');
           setLoading(false);
           alert('Assignment Uploaded');
           
@@ -126,7 +127,7 @@ const AddAssignment = props => {
             }}
             placeholder="Add Assignment Title"
             multiline={false}
-            value={details}></TextInput>
+            value={title}></TextInput>
           <View style={{borderBottomWidth: 0.3,marginTop:1,width:'90%',marginLeft:4}}></View>
           <TextInput
             onChangeText={text => {
@@ -178,6 +179,8 @@ const AddAssignment = props => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={documentUpload}
+        disabled={Loading}
+
         style={{
           borderRadius: 10,
           width: 200,
@@ -208,7 +211,7 @@ const AddAssignment = props => {
         onConfirm={date => {
           setOpen(false);
           setDate(date);
-          setDueDate(moment(date).format('YYYY-MM-DD'));
+          setDueDate(moment(date).format('YYYY-MM-DD hh:mm A'));
         }}
         onCancel={() => {
           setOpen(false);

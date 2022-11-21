@@ -125,7 +125,7 @@ const TeacherLogin = ({navigation}) => {
             borderRadius: 5,
           }}
           placeholder="Password"></TextInput>
-        <TouchableOpacity onPress={() => navigation.navigate('FORGOTPASSWORD')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('FORGOTPASSWORD')}>
           <Text
             style={{
               color: 'black',
@@ -135,7 +135,7 @@ const TeacherLogin = ({navigation}) => {
             }}>
             Forgot Password?
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('LOGIN')}>
           <Text
             style={{
@@ -151,6 +151,8 @@ const TeacherLogin = ({navigation}) => {
 
       <TouchableOpacity
         onPress={onClickLogin}
+        disabled={loading}
+
         style={{
           alignSelf: 'center',
           width: '70%',

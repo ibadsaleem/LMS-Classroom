@@ -103,7 +103,7 @@ const Profile = () => {
           Logout
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate('CHANGEPASSWORD')}
         style={{
           borderRadius: 40,
@@ -123,7 +123,7 @@ const Profile = () => {
           />{' '}
           Update Password
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <ScrollView>
         {/* <TouchableOpacity
           style={{

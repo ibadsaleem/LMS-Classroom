@@ -64,7 +64,7 @@ const AddMaterial = props => {
       media.forEach(element => {
         doc.append('fileToUpload', element);
       });
-      doc.append('title', 'ANNOUNCEMENT');
+      doc.append('title', title);
       doc.append('announcementType', 'ANNOUNCEMENT');
       doc.append('description', details);
       doc.append('dueDate', '2022-05-10');
@@ -85,6 +85,7 @@ const AddMaterial = props => {
           setMedia([]);
           setattachmentCount(0);
           setDetails('');
+          setTitle('');
           setLoading(false);
           alert('Material Uploaded');
           
@@ -123,7 +124,7 @@ const AddMaterial = props => {
             }}
             placeholder="Add Material Title"
             multiline={false}
-            value={details}></TextInput>
+            value={title}></TextInput>
           <View style={{borderBottomWidth: 0.3,marginTop:1,width:'90%',marginLeft:4}}></View>
           <TextInput
             onChangeText={text => {
@@ -153,6 +154,8 @@ const AddMaterial = props => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+              disabled={Loading}
+
         onPress={documentUpload}
         style={{
           borderRadius: 10,
