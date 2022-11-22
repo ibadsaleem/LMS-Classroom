@@ -117,26 +117,27 @@ const AnnouncementView = props => {
     setType(content.type)
   }
   
-  const downloadFile=async(link,filename)=>{
-    
-   fetch(
-    `https://ipt-lms-1.herokuapp.com/Files/${filename}`,
+  const downloadFile=async(link,fileid)=>{
+    let jsonValue=await AsyncStorage.getItem('userinfo');
+    console.log(fileid)
+    fetch(
+    `https://ipt-lms-1.herokuapp.com/submissions/Files/${fileid}`,
     {
       method: 'GET',
       headers: {
         // 'Content-Type': 'application/json',
-        // Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
       }
     })
     .then(response => response.json())
     .then(json => {
-     
+        console.log(json);
       
     });
 }
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
-      <Header title={content.title} />
+      <Header title={'Title: '+content.title} />
 
       <View>
         <View
@@ -200,7 +201,7 @@ const AnnouncementView = props => {
                 </Text>:
             content.obj.map((item, index) => {
               return (
-                <TouchableOpacity key={index+1} onPress={()=>{downloadFile(item.filePath,item.fileName)}}>
+                <TouchableOpacity key={index+1} onPress={()=>{downloadFile(item.filePath,item.id)}}>
 
                 <Text style={{padding: 8, color: 'black'}}>
                   <Entypo name="attachment" size={15} color="black" />
