@@ -27,7 +27,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 const AnnouncementView = props => {
   const [userAssignment, setuserAssignment] = useState([]);
   const [fileSubmitted, setFileSubmitted] = useState([]);
-  const [isFileSubmitted, setisFileSubmitted] = useState(true);
+  const [isFileSubmitted, setisFileSubmitted] = useState();
   const navigation = useNavigation();
   const route = useRoute();
   const [attachmentCount, setattachmentCount] = useState(0);
@@ -38,9 +38,9 @@ const AnnouncementView = props => {
   const [media, setMedia] = useState([]);
   const [type, setType] = useState('');
   useEffect(() => {
-    // checkFileSubmitted();
-
     func();
+    checkFileSubmitted();
+
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -72,7 +72,7 @@ const AnnouncementView = props => {
         doc.append('fileToUpload', element);
       });
       let jsonValue = await AsyncStorage.getItem('userinfo');
-      let id = content.obj[0].announcementId;
+      let id = content.id_Annoucement;
       fetch(
         `https://ipt-lms-1.herokuapp.com/api/user/Users/upload/mobile/assignment/${id}`,
         {
@@ -108,10 +108,11 @@ const AnnouncementView = props => {
   };
 
   const checkFileSubmitted = async () => {
-    let jsonValue = await AsyncStorage.getItem('userinfo');
 
+    let jsonValue = await AsyncStorage.getItem('userinfo');
+    console.log(content.id_Annoucement);
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/submissions/Files/${content.obj[0].announcementId}`,
+      `https://ipt-lms-1.herokuapp.com/api/user/Users/assignments/${content.id_Annoucement}`,
       {
         method: 'GET',
         headers: {
@@ -122,7 +123,13 @@ const AnnouncementView = props => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        console.log('================!>',json);
+        if(json.length>0 || json.status!=404){
+      setisFileSubmitted(true)
+    }else{
+
+      setisFileSubmitted(false);
+    }
       });
   };
   const func = async () => {
@@ -130,8 +137,9 @@ const AnnouncementView = props => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     setLoginMember(_loginMember);
     setType(content.type);
-    fetch(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/assignments/${content.obj[0].announcementId}`,
+    if(_loginMember!='student'){
+      fetch(
+      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/assignments/${content.id_Annoucement}`,
       {
         method: 'GET',
         headers: {
@@ -143,23 +151,24 @@ const AnnouncementView = props => {
       .then(response => response.json())
       .then(json => {
         setuserAssignment(json);
-      });
+      });}
   };
 
   const downloadFile = async (link, fileid) => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     console.log(fileid);
-    fetch(`https://ipt-lms-1.herokuapp.com/submissions/Files/${fileid}`, {
-      method: 'GET',
-      headers: {
-        // 'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-      });
+    // fetch(`https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     // 'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        
+    //   },
+    // })
+    //   .then(response => response.json())
+    //   .then(json => {
+    //     console.log(json);
+    //   });
   };
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
@@ -314,48 +323,53 @@ const AnnouncementView = props => {
             </TouchableOpacity>
           </>
         )
-      ) : (
-        <View style={{width: '100%', height: '100%'}}>
-          <Text
-            style={{padding: 10, fontSize: 20, color: 'black', marginTop: 20}}>
-            Assignments Submitted
-          </Text>
-
-          <ScrollView
-            style={{width: '100%', backgroundColor: '#ffffff'}}
-            showsVerticalScrollIndicator={false}>
-            {userAssignment.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  style={{
-                    marginTop: 2,
-                    marginBottom: 2,
-                    elevation: 1.5,
-                    flexDirection: 'row',
-                    padding: 10,
-                    width: '95%',
-                    alignSelf: 'center',
-                  }}>
-                  <View style={{width: '20%'}}>
-                    <Text
-                      key={index + 1}
-                      style={{color: 'black', fontSize: 15, fontWeight: '600'}}>
-                      {item.studentId + ' |'}
-                    </Text>
-                  </View>
-                  <View style={{width: '80%'}}>
-                    <Text
-                      key={index + 1}
-                      style={{color: 'black', fontSize: 15}}>
-                      {item.fileName}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
-        </View>
-      )}
+      ) : null
+      }
+      {
+        loginMember=='teacher' && type=='ASSIGNMENT'?(
+        
+          <View style={{width: '100%', height: '100%'}}>
+            <Text
+              style={{padding: 10, fontSize: 20, color: 'black', marginTop: 20}}>
+              Assignments Submitted
+            </Text>
+  
+            <ScrollView
+              style={{width: '100%', backgroundColor: '#ffffff'}}
+              showsVerticalScrollIndicator={false}>
+              {userAssignment.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      marginTop: 2,
+                      marginBottom: 2,
+                      elevation: 1.5,
+                      flexDirection: 'row',
+                      padding: 10,
+                      width: '95%',
+                      alignSelf: 'center',
+                    }}>
+                    <View style={{width: '20%'}}>
+                      <Text
+                        key={index + 1}
+                        style={{color: 'black', fontSize: 15, fontWeight: '600'}}>
+                        {item.studentId + ' |'}
+                      </Text>
+                    </View>
+                    <View style={{width: '80%'}}>
+                      <Text
+                        key={index + 1}
+                        style={{color: 'black', fontSize: 15}}>
+                        {item.fileName}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+        ):null
+      }
     </View>
   );
 };
