@@ -23,6 +23,7 @@ import DocumentPicker from 'react-native-document-picker';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment/moment';
 import RNFetchBlob from 'rn-fetch-blob';
+import { downloadFile } from 'rn-file-downloader';
 
 const AnnouncementView = props => {
   const [userAssignment, setuserAssignment] = useState([]);
@@ -154,9 +155,22 @@ const AnnouncementView = props => {
       });}
   };
 
-  const downloadFile = async (link, fileid) => {
+  const _downloadFile = async (link, fileid,filename) => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
-    console.log(fileid);
+    downloadFile(
+      `https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`,
+        `${filename}`,
+        JSON.stringify({
+            Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        }),
+    )
+    .then((path) => {
+      console.log(path)
+        alert('File Downloaded Successfully at '+path.toString());
+    })
+    .catch((error) => {
+        console.log(error)
+    });
     // fetch(`https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`, {
     //   method: 'GET',
     //   headers: {
@@ -170,6 +184,46 @@ const AnnouncementView = props => {
     //     console.log(json);
     //   });
   };
+  const downloadFile_usersubmissions = async (fileid,filename) => {
+    let jsonValue = await AsyncStorage.getItem('userinfo');
+    console.log(fileid,filename)
+    console.log(Date.now());
+    downloadFile(
+      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/submissions/Files/${fileid}`,
+        `${Date.now()+'_'+filename}`,
+        JSON.stringify({
+            Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        })
+    )
+    .then((path) => {
+        alert('File Downloaded Successfully at '+path.toString());
+    })
+    .catch((error) => {
+        console.log(error)
+    });
+    // fetch(`https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     // 'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
+        
+    //   },
+    // })
+    //   .then(response => response.json())
+    //   .then(json => {
+    //     console.log(json);
+    //   });
+  };
+
+
+
+
+
+
+
+
+
+
   return (
     <View style={{width: '100%', height: '100%', backgroundColor: '#ffffff'}}>
       <Header title={'Title: ' + content.title} />
@@ -237,11 +291,12 @@ const AnnouncementView = props => {
             </Text>
           ) : (
             content.obj.map((item, index) => {
+              console.log(item);
               return (
                 <TouchableOpacity
                   key={index + 1}
                   onPress={() => {
-                    downloadFile(item.filePath, item.id);
+                    _downloadFile(item.filePath, item.id,item.fileName);
                   }}>
                   <Text style={{padding: 8, color: 'black'}}>
                     <Entypo name="attachment" size={15} color="black" />
@@ -340,6 +395,8 @@ const AnnouncementView = props => {
               {userAssignment.map((item, index) => {
                 return (
                   <TouchableOpacity
+                  key={index+1}
+                  onPress={()=>downloadFile_usersubmissions(item.id,item.fileName)}
                     style={{
                       marginTop: 2,
                       marginBottom: 2,

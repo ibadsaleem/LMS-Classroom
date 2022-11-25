@@ -16,7 +16,7 @@ const AnnouncementCard = (props) => {
   const navigation = useNavigation();
   const month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return (
-    <TouchableOpacity onPress={()=>{navigation.navigate('ANNOUNCEMENTVIEW',{obj:props,type:props.announcementType,date:(moment(props.date).date()+' '+month[moment(props.date).month()-1]+' '+moment(props.date).year())})}}>
+    <TouchableOpacity onPress={()=>{navigation.navigate('ANNOUNCEMENTVIEW',{obj:props,type:props.announcementType,date:(moment(props.date).date()+' '+month[moment(props.date).month()]+' '+moment(props.date).year())})}}>
 
         <View
           style={{
