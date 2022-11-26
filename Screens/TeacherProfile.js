@@ -17,6 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { titleCase } from 'title-case';
 import moment from 'moment';
 const TeacherProfile = () => {
+  const month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
   const [Loading, setLoading] = useState(true);
   const [name,setName]=useState('')
   const [id,setID]=useState('')
@@ -189,9 +191,8 @@ const TeacherProfile = () => {
      <Text style={{textAlign:'center',color:'black',fontWeight:'700',marginTop:5}}>Loading Assignments...</Text>
      </View>:
         assignments.map((item,index)=>{
-          
           return(
-            <View
+            <TouchableOpacity
             key={index}
             style={{
                 padding: 10,
@@ -212,7 +213,7 @@ const TeacherProfile = () => {
               Deadline: {moment(item.dueDate).format('DD-MM-YYYY hh:mm A')}
             </Text>
             <View style={{borderBottomWidth:0.5,width:'50%',borderColor:'black'}}></View>
-          </View>
+          </TouchableOpacity>
           );
         })
      }

@@ -8,6 +8,7 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  ImageBackground,
   BackHandler,
 } from 'react-native';
 import BottomTab from '../components/BottomTab';
@@ -22,7 +23,7 @@ import DocumentPicker from 'react-native-document-picker';
 import {titleCase} from 'title-case';
 import moment from 'moment';
 import { useIsFocused } from "@react-navigation/native";
-
+import LinearGradient from 'react-native-linear-gradient';
 //Add AAAAAAAAA
 // Add button for file upload and change the function as per count
 
@@ -213,24 +214,28 @@ const Announcements = props => {
         style={{width: '100%', backgroundColor: '#ffffff'}}
         showsVerticalScrollIndicator={false}>
         <Header title={'Class Announcement'} hidden={false} />
+
         <View
           style={{
             width: '100%',
-            height: 150,
-            padding: 10,
             justifyContent: 'center',
             backgroundColor: 'lightgrey',
             marginTop: 10,
           }}>
-          <Text style={{color: '#000000', fontSize: 30}}>
+          <LinearGradient  colors={['#4c669f', '#3b5998', '#192f6a']}>
+            <View style={{padding:10}}>
+
+          <Text style={{color: '#ffffff', fontSize: 30}}>
             Class: {titleCase(name)}
           </Text>
-          <Text style={{color: '#000000', fontSize: 20}}>
+          <Text style={{color: '#ffffff', fontSize: 20}}>
             {titleCase(teacherName)}
           </Text>
-          {loginMember=='teacher'?<Text style={{color: '#000000', fontSize: 20,fontWeight:'600'}}>
+          {loginMember=='teacher'?<Text style={{color: '#ffffff', fontSize: 20,fontWeight:'600'}}>
             {'Class Code: '+courseCode}
           </Text>:null}
+            </View>
+            </LinearGradient>
         </View>
         {loginMember === 'student' || loading? null : (
           <View
@@ -308,6 +313,7 @@ const Announcements = props => {
         <BottomTab />
       ) : (
         <FloatingAction
+        color='#009eec'
           actions={actions}
           onPressItem={name => {
             if (name == 'assignment') {
