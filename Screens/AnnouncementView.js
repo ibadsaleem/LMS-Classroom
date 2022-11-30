@@ -75,7 +75,7 @@ const AnnouncementView = props => {
       let jsonValue = await AsyncStorage.getItem('userinfo');
       let id = content.id_Annoucement;
       fetch(
-        `https://ipt-lms-1.herokuapp.com/api/user/Users/upload/mobile/assignment/${id}`,
+        `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/upload/mobile/assignment/${id}`,
         {
           method: 'POST',
           headers: {
@@ -113,7 +113,7 @@ const AnnouncementView = props => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     console.log(content.id_Annoucement);
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/assignments/${content.id_Annoucement}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/assignments/${content.id_Annoucement}`,
       {
         method: 'GET',
         headers: {
@@ -140,7 +140,7 @@ const AnnouncementView = props => {
     setType(content.type);
     if(_loginMember!='student'){
       fetch(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/assignments/${content.id_Annoucement}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/assignments/${content.id_Annoucement}`,
       {
         method: 'GET',
         headers: {
@@ -158,7 +158,7 @@ const AnnouncementView = props => {
   const _downloadFile = async (link, fileid,filename) => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     downloadFile(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/announcements/Files/${fileid}`,
         `${filename}`,
         JSON.stringify({
             Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
@@ -171,7 +171,7 @@ const AnnouncementView = props => {
     .catch((error) => {
         console.log(error)
     });
-    // fetch(`https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`, {
+    // fetch(`https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/announcements/Files/${fileid}`, {
     //   method: 'GET',
     //   headers: {
     //     // 'Content-Type': 'application/json',
@@ -189,7 +189,7 @@ const AnnouncementView = props => {
     console.log(fileid,filename)
     console.log(Date.now());
     downloadFile(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/submissions/Files/${fileid}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/submissions/Files/${fileid}`,
         `${Date.now()+'_'+filename}`,
         JSON.stringify({
             Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
@@ -201,7 +201,7 @@ const AnnouncementView = props => {
     .catch((error) => {
         console.log(error)
     });
-    // fetch(`https://ipt-lms-1.herokuapp.com/api/user/Users/announcements/Files/${fileid}`, {
+    // fetch(`https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/announcements/Files/${fileid}`, {
     //   method: 'GET',
     //   headers: {
     //     // 'Content-Type': 'application/json',

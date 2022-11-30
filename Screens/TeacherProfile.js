@@ -59,7 +59,7 @@ const TeacherProfile = () => {
   const getAllAssignments = async () => {
     let jsonValue=await AsyncStorage.getItem('userinfo');
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/announcements/all`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/announcements/all`,
       {
         method: 'GET',
         headers: {

@@ -73,7 +73,7 @@ const AddAssignment = props => {
       doc.append('dueDate', dueDate);
       let jsonValue = await AsyncStorage.getItem('userinfo');
       fetch(
-        `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/upload/class/${id}`,
+        `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/upload/class/${id}`,
         {
           method: 'POST',
           headers: {

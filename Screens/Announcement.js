@@ -76,7 +76,7 @@ const Announcements = props => {
     let loginMember = await AsyncStorage.getItem('loginMember');
     setLoginMember(loginMember);
     loginMember=='student'? fetch(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/annoucements/class/${id}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/annoucements/class/${id}`,
       {
         method: 'GET',
         headers: {
@@ -100,7 +100,7 @@ const Announcements = props => {
           setloading(false);
         }
       }):fetch(
-        `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/annoucements/class/${id}`,
+        `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/annoucements/class/${id}`,
         {
           method: 'GET',
           headers: {
@@ -139,7 +139,7 @@ const Announcements = props => {
     doc.append('description', 'Hello This is assignment');
     doc.append('dueDate', '2022-05-10');
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/upload/class/${id}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/upload/class/${id}`,
       {
         method: 'POST',
         headers: {
@@ -164,7 +164,7 @@ const Announcements = props => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/announcement/add/${id}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/announcement/add/${id}`,
       {
         method: 'POST',
         headers: {

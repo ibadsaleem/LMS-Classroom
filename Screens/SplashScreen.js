@@ -18,7 +18,7 @@ const SplashScreen = ({navigation}) => {
   const GetUser = async () => {
     loginMember=await AsyncStorage.getItem('loginMember');
   
-    const apiCheck=loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes';
+    const apiCheck=loginMember=='student'?'https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users':'https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/classes';
     const jsonValue = await AsyncStorage.getItem('userinfo');
     let i = await fetch(
       apiCheck,

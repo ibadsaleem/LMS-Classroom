@@ -50,7 +50,7 @@ const AddNewClass = () => {
     setLoading(true);
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
-    fetch(`https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/class/add`, {
+    fetch(`https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/class/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const AddNewClass = () => {
   const coursesClass = async () => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
-    fetch(`https://ipt-lms-1.herokuapp.com/api/Course/all`, {
+    fetch(`https://learningmanagementsystem-ipt.azurewebsites.net/api/Course/all`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

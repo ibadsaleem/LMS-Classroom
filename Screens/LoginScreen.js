@@ -34,7 +34,7 @@ const Login = ({navigation}) => {
 
     setLoading(true);
     //API CALL for submitting data
-    fetch('https://ipt-lms-1.herokuapp.com/api/user/Users/Login', {
+    fetch('https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/Login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

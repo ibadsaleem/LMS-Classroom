@@ -44,7 +44,7 @@ const AddClass = () => {
     let jsonValue = await AsyncStorage.getItem('userinfo');
     let loginMember = await AsyncStorage.getItem('loginMember');
     fetch(
-      `https://ipt-lms-1.herokuapp.com/api/user/Users/add/class/${classCode}`,
+      `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/add/class/${classCode}`,
       {
         method: 'PUT',
         headers: {
@@ -55,6 +55,7 @@ const AddClass = () => {
     )
       .then(response => response.json())
       .then(json => {
+        console.log(json)
         if (json.m == 'Duplicate Entry. Already enrolled!') {
           setclassCode('');
           Alert.alert('Important', json.m);
@@ -65,12 +66,16 @@ const AddClass = () => {
 
           Alert.alert('Important', 'Class Code is not valid!');
         } else {
-          setclassCode('');
-
+          
           Alert.alert('Important', 'Class Enrolled!');
+          setclassCode('');
         }
         setloading(false);
-      });
+      }
+      )
+      .catch(err=>{
+        alert.Alert(err.message)
+      })
   };
 
   return (

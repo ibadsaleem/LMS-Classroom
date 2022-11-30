@@ -69,7 +69,7 @@ const Classes = () => {
     // 
     let loginMember = await AsyncStorage.getItem('loginMember');
     setLoginMember(loginMember=='student'?0:1);
-    let api = loginMember=='student'?'https://ipt-lms-1.herokuapp.com/api/user/Users/classes':'https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/classes'
+    let api = loginMember=='student'?'https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/classes':'https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/classes'
     let jsonValue = await AsyncStorage.getItem('userinfo');
     fetch(api, {
       method: 'GET',

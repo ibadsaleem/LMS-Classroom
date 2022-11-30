@@ -26,7 +26,7 @@ const TeacherLogin = ({navigation}) => {
     await AsyncStorage.setItem('loginMember', '');
     setLoading(true);
     //API CALL for submitting data
-    fetch('https://ipt-lms-1.herokuapp.com/api/teacher/Teacher/Login', {
+    fetch('https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/Login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
