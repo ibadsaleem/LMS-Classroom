@@ -155,18 +155,26 @@ const AnnouncementView = props => {
       });}
   };
 
+  const [loadingFile,setLoadingFile]=useState(false);
+  const [loadingFileSubmission,setLoadingFileSubmission]=useState(false);
   const _downloadFile = async (link, fileid,filename) => {
+    setLoadingFile(true);
     let jsonValue = await AsyncStorage.getItem('userinfo');
+    let member= await AsyncStorage.getItem('loginMember');
+    console.log(member)
+    let api= member=='student'?'https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/announcements/Files/':'https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/announcements/Files/';
+    console.log(api+fileid)
     downloadFile(
-      `https://learningmanagementsystem-ipt.azurewebsites.net/api/user/Users/announcements/Files/${fileid}`,
-        `${filename}`,
+      api+fileid+'?AuthToken='+JSON.parse(jsonValue).token,
+        `${Date.now()+'_'+filename}`,
         JSON.stringify({
             Authorization: 'Bearer ' + JSON.parse(jsonValue).token,
         }),
     )
     .then((path) => {
       console.log(path)
-        alert('File Downloaded Successfully at '+path.toString());
+      alert('File Downloaded Successfully at '+path.toString());
+      setLoadingFile(false);
     })
     .catch((error) => {
         console.log(error)
@@ -185,7 +193,9 @@ const AnnouncementView = props => {
     //   });
   };
   const downloadFile_usersubmissions = async (fileid,filename) => {
+    setLoadingFileSubmission(true)
     let jsonValue = await AsyncStorage.getItem('userinfo');
+
     console.log(fileid,filename)
     console.log(Date.now());
     downloadFile(
@@ -197,6 +207,7 @@ const AnnouncementView = props => {
     )
     .then((path) => {
         alert('File Downloaded Successfully at '+path.toString());
+        setLoadingFileSubmission(false)
     })
     .catch((error) => {
         console.log(error)
@@ -294,6 +305,7 @@ const AnnouncementView = props => {
               console.log(item);
               return (
                 <TouchableOpacity
+                style={{flexDirection:'row',justifyContent:'space-between',paddingRight:10}}
                   key={index + 1}
                   onPress={() => {
                     _downloadFile(item.filePath, item.id,item.fileName);
@@ -303,6 +315,7 @@ const AnnouncementView = props => {
                     {'  '}
                     {item.fileName}
                   </Text>
+                  {loadingFile?<ActivityIndicator size={20} color={'#009eec'}/>:null}
                 </TouchableOpacity>
               );
             })
@@ -413,13 +426,14 @@ const AnnouncementView = props => {
                         {item.studentId + ' |'}
                       </Text>
                     </View>
-                    <View style={{width: '80%'}}>
+                    <View style={{width: '75%'}}>
                       <Text
                         key={index + 1}
                         style={{color: 'black', fontSize: 15}}>
                         {item.fileName}
                       </Text>
                     </View>
+                      {loadingFileSubmission?<ActivityIndicator size={20} color={'#009eec'}/>:null}
                   </TouchableOpacity>
                 );
               })}

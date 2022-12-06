@@ -20,7 +20,7 @@ const ClassCard=(props) =>{
     <Image source={props.cover} style={{width:'100%',height:170,borderTopRightRadius:15,borderTopLeftRadius:15}} />
     <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
     <View style={{}}>
-        <Text style={{fontSize:25,color:'black',fontWeight:'500'}}>{props.name}</Text>    
+        <Text style={{fontSize:20,color:'black',fontWeight:'500'}}>{props.name}</Text>    
         <Text style={{fontSize:14,color:'black',fontWeight:'500'}}>{titleCase(props.teacher)}</Text>    
         <Text style={{fontSize:14,color:'black',fontWeight:'500'}}>{'Section: '+titleCase(props.section)}</Text>    
     </View>
