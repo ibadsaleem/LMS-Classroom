@@ -54,10 +54,11 @@ const TeacherProfile = () => {
     //   backAction,
     // );
     // return () => backHandler.remove();
-  },[isFocused])
+  },[])
 
   const getAllAssignments = async () => {
     let jsonValue=await AsyncStorage.getItem('userinfo');
+    console.log(jsonValue)
     fetch(
       `https://learningmanagementsystem-ipt.azurewebsites.net/api/teacher/Teacher/announcements/all`,
       {
@@ -70,8 +71,12 @@ const TeacherProfile = () => {
     )
       .then(response => response.json())
       .then(json => {
-       
-        setAssignments(json);
+       console.log(json)
+       if(json.m=='Object reference not set to an instance of an object.')
+        setAssignments([]);
+        else{
+          setAssignments(json);
+        }
         setLoading(false);
         // 
       });
